@@ -33,7 +33,7 @@ exports.register = async (req, res) => {
         .status(httpStatus[400])
         .json({ message: "user is already exist with this email" });
     }
-    const hashedPassword = bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({
       fullname,
       email,
@@ -41,6 +41,9 @@ exports.register = async (req, res) => {
       password: hashedPassword,
       role,
     });
+    return res
+      .status(httpStatus.CREATED)
+      .json({ message: "User created successfully" });
   } catch (error) {
     console.log(error);
     return res
@@ -51,18 +54,20 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
+    const { email, password, role } = req.body;
+    if (!email || !password || !role) {
       return res
         .status(httpStatus.NOT_ACCEPTABLE)
-        .json({ message: "Something wron all fields required" });
+        .json({ message: "Something wrong all fields required" });
     }
     let user = await User.findOne({ email });
+
     if (!user) {
       return res
         .status(httpStatus.NOT_ACCEPTABLE)
         .json({ message: "email and password is incorrect" });
     }
+
     const isPassword = await bcrypt.compare(password, user.password);
     if (!isPassword) {
       return res
@@ -97,6 +102,7 @@ exports.login = async (req, res) => {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         sameSite: "none",
+        secure: true,
       })
       .json({ message: `Welcome back ${user.fullname}`, success: true, user });
   } catch (error) {
