@@ -106,3 +106,58 @@ exports.login = async (req, res) => {
       .json({ message: "Internal server error" });
   }
 };
+
+exports.logout = (req, res) => {
+  try {
+    res.clearCookie("token");
+    return res
+      .status(httpStatus.OK)
+      .cookie("token", "", { maxAge: 0 })
+      .json({ message: "Logged out successfully" });
+  } catch (error) {}
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const { fullname, email, phoneNumber, bio, skills } = req.body;
+    const file = req.file;
+    if (!fullname || !email || !phoneNumber || !bio || !skills) {
+      return res
+        .status(httpStatus.NOT_ACCEPTABLE)
+        .json({ message: "fields are required somethin is missing" });
+    }
+
+    // cloudinary
+
+    const skillsArray = skills.split(",");
+    const userId = req.id;
+    let user = await User.findById(userId);
+    if (!user) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({ message: "User not found" });
+    }
+
+    user.fullname = fullname;
+    user.email = email;
+    user.phoneNumber = phoneNumber;
+    user.profile.bio = bio;
+    user.profile.skills = skillsArray;
+
+    // resume upload from here
+    await user.save();
+
+    user = {
+      _id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      role: user.role,
+      profile: user.profile,
+    };
+
+    return res
+      .status(httpStatus.OK)
+      .json({ message: "Profile updated successfully", user });
+  } catch (error) {}
+};
