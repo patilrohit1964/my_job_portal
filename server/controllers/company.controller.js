@@ -1,5 +1,6 @@
 const Company = require("../models/company.model");
 const httpStatus = require("http-status").status;
+
 exports.registerCompany = async (req, res) => {
   try {
     const { companyName } = req.body;
@@ -12,7 +13,7 @@ exports.registerCompany = async (req, res) => {
     }
     company = await Company.create({
       name: companyName,
-      userId: req.user._id,
+      userId: req.id,
     });
 
     res
@@ -26,14 +27,18 @@ exports.registerCompany = async (req, res) => {
 
 exports.getCompany = async (req, res) => {
   try {
-    const company = await Company.findById(req.id);
+    const company = await Company.find({ userId: req.id });
     if (!company) {
-      return res.status(httpStatus[400]).json({ message: "Company not found" });
+      return res
+        .status(httpStatus.ALREADY_REPORTED)
+        .json({ message: "Company not found" });
     }
     res.json(company);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Server error" });
   }
 };
 
@@ -41,7 +46,9 @@ exports.getCompanyById = async (req, res) => {
   try {
     const company = await Company.findById(req.params.id);
     if (!company) {
-      return res.status(httpStatus[400]).json({ message: "Company not found" });
+      return res
+        .status(httpStatus.ALREADY_REPORTED)
+        .json({ message: "Company not found" });
     }
     return res.status(httpStatus.OK).json({ company });
   } catch (error) {
@@ -66,11 +73,13 @@ exports.updateCompany = async (req, res) => {
 
     if (!company) {
       return res
-        .status(httpStatus[400])
+        .status(httpStatus.ALREADY_REPORTED)
         .json({ message: "Company name is required" });
     }
 
-    res.status(httpStatus.OK).json({ company });
+    res
+      .status(httpStatus.OK)
+      .json({ company, message: "Company has been updated" });
   } catch (error) {
     console.error(error);
     res
