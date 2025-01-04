@@ -14,7 +14,6 @@ exports.postJob = async (req, res) => {
       companyId,
     } = req.body;
 
-    const userId = req.id;
     if (
       !title ||
       !description ||
@@ -23,11 +22,10 @@ exports.postJob = async (req, res) => {
       !location ||
       !jobType ||
       !experience ||
-      !position ||
-      !companyId
+      !position
     ) {
       return res
-        .status(httpsStatus[400])
+        .status(httpsStatus.BAD_REQUEST)
         .json({ message: "All fields are required" });
     }
 
@@ -41,7 +39,7 @@ exports.postJob = async (req, res) => {
       experienceLevel: experience,
       position,
       company: companyId,
-      created_by: userId,
+      created_by: req.id,
     });
 
     res
@@ -101,7 +99,7 @@ exports.getJobById = async (req, res) => {
 };
 
 // admin controller
-exports.getAdminJobs = async (req, req) => {
+exports.getAdminJobs = async (req, res) => {
   try {
     const adminId = req.id;
     const jobs = await Job.find({ created_by: adminId }).populate("company");

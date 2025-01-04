@@ -4,6 +4,7 @@ const cors = require("cors");
 const connectDb = require("./utils/db");
 const userRouter = require("./routes/user.router");
 const compnayRouter = require("./routes/company.router");
+const jobRouter = require("./routes/job.router");
 require("dotenv").config({});
 const app = express();
 app.use(express.json());
@@ -24,6 +25,7 @@ const PORT = process.env.PORT || 5050;
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/company", compnayRouter);
+app.use("/api/v1/job", jobRouter);
 
 app.listen(PORT, () => {
   connectDb();
