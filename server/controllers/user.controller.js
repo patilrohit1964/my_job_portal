@@ -75,7 +75,7 @@ exports.login = async (req, res) => {
         .json({ message: "password is incorrect" });
     }
     // check user role
-    if (role === user.role) {
+    if (role !== user.role) {
       return res
         .status(httpStatus.NOT_ACCEPTABLE)
         .json({ message: "admin authenticated" });

@@ -60,15 +60,20 @@ exports.getAllJobs = async (req, res) => {
         { description: { $regex: keyword, $options: "i" } },
       ],
     };
-    const jobs = await Job.find(query).populate("company");
+    const jobs = await Job.find(query)
+      .populate({
+        path: "company",
+      })
+      .sort({ createdAt: -1 });
+
     if (!jobs) {
       return res
         .status(httpsStatus.NOT_FOUND)
         .json({ message: "No jobs found" });
     }
-    return res.json(httpsStatus.OK).json({
-      message: "Jobs fetched successfully",
+    return res.status(httpsStatus.OK).json({
       jobs,
+      message: "Jobs fetched successfully",
     });
   } catch (error) {
     console.error(error);
@@ -86,7 +91,7 @@ exports.getJobById = async (req, res) => {
         .status(httpsStatus.NOT_FOUND)
         .json({ message: "Job not found" });
     }
-    return res.json(httpsStatus.OK).json({
+    return res.status(httpsStatus.OK).json({
       message: "Job fetched successfully",
       job,
     });
@@ -108,7 +113,7 @@ exports.getAdminJobs = async (req, res) => {
         .status(httpsStatus.NOT_FOUND)
         .json({ message: "No jobs found" });
     }
-    return res.json(httpsStatus.OK).json({
+    return res.status(httpsStatus.OK).json({
       message: "Jobs fetched successfully",
       jobs,
     });
