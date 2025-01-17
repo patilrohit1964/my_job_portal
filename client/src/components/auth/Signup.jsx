@@ -1,12 +1,27 @@
-import React from 'react'
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
-import Navbar from '../shared/Navbar'
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
-import { Button } from '../ui/button'
 import { Link } from 'react-router-dom'
+import Navbar from '../shared/Navbar'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { RadioGroup } from '../ui/radio-group'
+import { useState } from 'react'
 
 const Signup = () => {
+    const [input, setInput] = useState({
+        fullname: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        role: "",
+        file: ""
+    })
+    const changeEventHandler = (e) => {
+        const { name, value } = e.target
+        setInput({ [name]: value })
+    }
+    const handleSubmit = () => {
+        console.log(input);
+    }
     return (
         <div>
             <Navbar />
@@ -15,7 +30,7 @@ const Signup = () => {
                     <h1 className='font-bold text-xl mb-5'>Sign Up</h1>
                     <div>
                         <Label>Full Name</Label>
-                        <Input type="text" placeholder="enter your fullname" />
+                        <Input type="text" placeholder="enter your fullname" value={input.fullname} />
                     </div>
                     <div>
                         <Label>Phone Number</Label>
