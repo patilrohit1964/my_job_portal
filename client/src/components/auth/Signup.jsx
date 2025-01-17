@@ -10,54 +10,58 @@ const Signup = () => {
     const [input, setInput] = useState({
         fullname: "",
         email: "",
-        phoneNumber: "",
+        phonenumber: "",
         password: "",
-        role: "",
+        role: "student",
         file: ""
     })
     const changeEventHandler = (e) => {
         const { name, value } = e.target
-        setInput({ [name]: value })
+        setInput({ ...input, [name]: value })
     }
-    const handleSubmit = () => {
+    const changeFileHandler = (e) => {
+        setInput({ ...input, file: e.target.files?.[0] });
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
         console.log(input);
     }
     return (
         <div>
             <Navbar />
             <div className='flex items-center justify-center max-w-7xl mx-auto'>
-                <form action="" className='w-1/2 border border-gray-200 rounded-md p-4 my-10 shadow-md'>
+                <form action="" className='w-1/2 border border-gray-200 rounded-md p-4 my-10 shadow-md' onSubmit={handleSubmit}>
                     <h1 className='font-bold text-xl mb-5'>Sign Up</h1>
                     <div>
                         <Label>Full Name</Label>
-                        <Input type="text" placeholder="enter your fullname" value={input.fullname} />
+                        <Input type="text" name="fullname" placeholder="enter your fullname" value={input.fullname} onChange={changeEventHandler} />
                     </div>
                     <div>
                         <Label>Phone Number</Label>
-                        <Input type="text" placeholder="enter your phone number" />
+                        <Input type="text" name="phonenumber" placeholder="enter your phone number" value={input.phonenumber} onChange={changeEventHandler} />
                     </div>
                     <div>
                         <Label>Email</Label>
-                        <Input type="text" placeholder="enter your email" />
+                        <Input type="text" name="email" placeholder="enter your email" value={input.email} onChange={changeEventHandler} />
                     </div>
                     <div>
                         <Label>Password</Label>
-                        <Input type="text" placeholder="enter your password" />
+                        <Input type="text" name="password" placeholder="enter your password" value={input.password} onChange={changeEventHandler} />
                     </div>
                     <div className='flex items-center justify-between mt-3'>
                         <RadioGroup className="flex items-center gap-4 my-4">
                             <div className="flex items-center space-x-2">
-                                <Input type="radio" className="cursor-pointer" name="role" value="student" id="r1" defaultChecked />
+                                <Input type="radio" name="role" value="student" id="r1" checked={input.role === "student"} onChange={changeEventHandler} />
                                 <Label htmlFor="r1">Student</Label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <Input type="radio" className="cursor-pointer" name="role" value="recruiter" id="r2" />
+                                <Input type="radio" name="role" value="recruiter" id="r1" checked={input.role === "recruiter"} onChange={changeEventHandler} />
                                 <Label htmlFor="r2">Recruiter</Label>
                             </div>
                         </RadioGroup>
                         <div className='flex items-center gap-2'>
                             <Label>Profile</Label>
-                            <Input accept="image/*" type="file" className="cursor-pointer" />
+                            <Input accept="image/*" type="file" className="cursor-pointer" onChange={changeFileHandler} />
                         </div>
                     </div>
                     <Button type="submit" className="w-full my-4">Signup</Button>
