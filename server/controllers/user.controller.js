@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 exports.register = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, password, role } = req.body;
+    console.log(req.body);
     if (!fullname || !email || !phoneNumber || !password || !role) {
       return res
         .status(httpStatus.NOT_ACCEPTABLE)
