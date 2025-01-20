@@ -11,20 +11,11 @@ exports.register = async (req, res) => {
         .status(httpStatus.NOT_ACCEPTABLE)
         .json({ message: "All fields are required" });
     }
-    if (!validator.isLength(fullname, { min: 3, max: 50 })) {
-      return res
-        .status(httpStatus.NOT_ACCEPTABLE)
-        .json({ message: "Fullname must be between 3 and 50 characters" });
-    }
+
     if (!validator.isEmail(email)) {
       return res
         .status(httpStatus.NOT_ACCEPTABLE)
         .json({ message: "Invalid email format" });
-    }
-    if (!validator.isMobilePhone(phoneNumber, "en-US")) {
-      return res
-        .status(httpStatus.NOT_ACCEPTABLE)
-        .json({ message: "Invalid phone number format" });
     }
 
     const user = await User.findOne({ email });
@@ -43,7 +34,7 @@ exports.register = async (req, res) => {
     });
     return res
       .status(httpStatus.CREATED)
-      .json({ message: "User created successfully" });
+      .json({ message: "User created successfully", success: true });
   } catch (error) {
     console.log(error);
     return res
