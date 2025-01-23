@@ -35,9 +35,6 @@ const Signup = () => {
         formData.append("phonenumber", input.phonenumber);
         formData.append("role", input.role);
         formData.append("password", input.password);
-        formData.forEach((value, key) => {
-            console.log(`${key}: ${value}`);
-        })
         if (input.file) {
             formData.append("file", input.file);
         }
