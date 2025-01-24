@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const connectDb = require("./utils/db");
 const userRouter = require("./routes/user.router");
+const path = require("path");
 const compnayRouter = require("./routes/company.router");
 const jobRouter = require("./routes/job.router");
 const applicationRouter = require("./routes/application.router");
@@ -10,6 +11,7 @@ require("dotenv").config({});
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(__dirname, "./uploads")));
 app.use(cookieParser());
 app.use(
   cors({

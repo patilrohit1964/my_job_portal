@@ -12,7 +12,7 @@ const Signup = () => {
     const [input, setInput] = useState({
         fullname: "",
         email: "",
-        phonenumber: "",
+        phoneNumber: "",
         password: "",
         role: "student",
         file: ""
@@ -32,7 +32,7 @@ const Signup = () => {
         const formData = new FormData();
         formData.append("fullname", input.fullname);
         formData.append("email", input.email);
-        formData.append("phonenumber", input.phonenumber);
+        formData.append("phoneNumber", input.phoneNumber);
         formData.append("role", input.role);
         formData.append("password", input.password);
         if (input.file) {
@@ -49,7 +49,7 @@ const Signup = () => {
             if (res.data.success) {
                 navigate("/");
                 toast.success('User registered successfully');
-                setInput({ fullname: "", email: "", phonenumber: "", password: "", role: "student", file: "" });
+                setInput({ fullname: "", email: "", phoneNumber: "", password: "", role: "student", file: "" });
             }
         } catch (error) {
             console.error(error?.message);
@@ -72,7 +72,7 @@ const Signup = () => {
                     </div>
                     <div>
                         <Label>Phone Number</Label>
-                        <Input type="text" name="phonenumber" placeholder="enter your phone number" value={input.phonenumber} onChange={changeEventHandler} />
+                        <Input type="text" name="phoneNumber" placeholder="enter your phone number" value={input.phoneNumber} onChange={changeEventHandler} />
                     </div>
                     <div>
                         <Label>Email</Label>

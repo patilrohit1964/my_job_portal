@@ -7,7 +7,6 @@ exports.register = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, password, role } = req.body;
 
-    console.log(req.body);
     if (!fullname || !email || !phoneNumber || !password || !role) {
       return res
         .status(httpStatus.NOT_ACCEPTABLE)
@@ -33,6 +32,9 @@ exports.register = async (req, res) => {
       phoneNumber,
       password: hashedPassword,
       role,
+      profile: {
+        profilePhoto: req?.file?.filename || "",
+      },
     });
     return res
       .status(httpStatus.CREATED)
@@ -41,7 +43,7 @@ exports.register = async (req, res) => {
     console.log(error);
     return res
       .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: error.message });
+      .json({ message: error?.message });
   }
 };
 
@@ -61,32 +63,32 @@ exports.login = async (req, res) => {
         .json({ message: "email and password is incorrect" });
     }
 
-    const isPassword = await bcrypt.compare(password, user.password);
+    const isPassword = await bcrypt.compare(password, user?.password);
     if (!isPassword) {
       return res
         .status(httpStatus.NOT_ACCEPTABLE)
         .json({ message: "password is incorrect" });
     }
     // check user role
-    if (role !== user.role) {
+    if (role !== user?.role) {
       return res
         .status(httpStatus.NOT_ACCEPTABLE)
         .json({ message: "admin authenticated" });
     }
     const tokenData = {
-      userId: user._id,
+      userId: user?._id,
     };
     const token = jwt.sign(tokenData, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
     user = {
-      _id: user._id,
-      fullname: user.fullname,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      role: user.role,
-      profile: user.profile,
+      _id: user?._id,
+      fullname: user?.fullname,
+      email: user?.email,
+      phoneNumber: user?.phoneNumber,
+      role: user?.role,
+      profile: user?.profile,
     };
 
     return res
@@ -97,7 +99,7 @@ exports.login = async (req, res) => {
         sameSite: "none",
         secure: true,
       })
-      .json({ message: `Welcome back ${user.fullname}`, success: true, user });
+      .json({ message: `Welcome back ${user?.fullname}`, success: true, user });
   } catch (error) {
     console.log(error);
     return res
@@ -119,7 +121,7 @@ exports.logout = (req, res) => {
 exports.updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    const file = req.file;
+    const file = req?.file;
 
     // cloudinary
 
@@ -127,7 +129,7 @@ exports.updateProfile = async (req, res) => {
     if (skills) {
       skillsArray = skills.split(",");
     }
-    const userId = req.id;
+    const userId = req?.id;
     let user = await User.findById(userId);
     if (!user) {
       return res
@@ -145,18 +147,18 @@ exports.updateProfile = async (req, res) => {
     await user.save();
 
     user = {
-      _id: user._id,
-      fullname: user.fullname,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      role: user.role,
-      profile: user.profile,
+      _id: user?._id,
+      fullname: user?.fullname,
+      email: user?.email,
+      phoneNumber: user?.phoneNumber,
+      role: user?.role,
+      profile: user?.profile,
     };
 
     return res
       .status(httpStatus.OK)
       .json({ message: "Profile updated successfully", user });
   } catch (error) {
-    console.log(error.message);
+    console.log(error?.message);
   }
 };
