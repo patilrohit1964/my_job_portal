@@ -1,13 +1,16 @@
+import { setLoading } from '@/redux/authSlice'
+import { USER_API_END_POINT } from '@/utils/constants'
+import axios from 'axios'
+import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Navbar from '../shared/Navbar'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { RadioGroup } from '../ui/radio-group'
-import { useState } from 'react'
-import { toast } from 'react-toastify'
-import axios from 'axios'
-import { USER_API_END_POINT } from '@/utils/constants'
 
 const Login = () => {
 
@@ -16,7 +19,10 @@ const Login = () => {
         password: "",
         role: "student",
     })
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const { loading } = useSelector(state => state.authSlice);
+
     const changeEventHandler = (e) => {
         const { name, value } = e.target
         setInput({ ...input, [name]: value })
@@ -24,6 +30,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            dispatch(setLoading(true));
             const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
                 withCredentials: true,
                 headers: {
@@ -38,6 +45,9 @@ const Login = () => {
         } catch (error) {
             toast.error(error?.response?.data?.message, 'Error');
             console.error(error);
+        }
+        finally {
+            dispatch(setLoading(false));
         }
     }
 
@@ -67,7 +77,11 @@ const Login = () => {
                             </div>
                         </RadioGroup>
                     </div>
-                    <Button type="submit" className="w-full my-4">Login</Button>
+                    {loading ? <Button className="w-full my-4" disabled={loading}><Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please Wait</Button> :
+                        <Button type="submit" className="w-full my-4">
+                            Login
+                        </Button>
+                    }
                     <div className='text-sm text-center'>Don't have an account? <Link to={"/signup"} className='text-blue-600'>Signup</Link></div>
                 </form>
             </div>
