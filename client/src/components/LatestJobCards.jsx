@@ -1,5 +1,6 @@
-import { Badge } from 'lucide-react'
+
 import React from 'react'
+import { Badge } from './ui/badge'
 
 const LatestJobCards = () => {
     return (

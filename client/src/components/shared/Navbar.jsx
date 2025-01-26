@@ -6,12 +6,15 @@ import {
 import Avatar from 'react-avatar'
 import { AvatarImage } from '../ui/avatar'
 import { Button } from "../ui/button"
-import { LogOutIcon, User2 } from "lucide-react"
+import { LogOut, LogOutIcon, User2 } from "lucide-react"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 const Navbar = () => {
-    const { user } = useSelector(state => state.authSlice)
+    const { user } = useSelector(state => state.authSlice);
+    const logoutHandler = () => {
+
+    }
     return (
         <div className='bg-white'>
             <div className='flex items-center justify-between mx-auto max-w-7xl h-16'>
