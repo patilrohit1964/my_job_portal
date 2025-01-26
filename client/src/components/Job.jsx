@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button } from './ui/button'
-import { Badge, Bookmark } from 'lucide-react'
+import { Bookmark } from 'lucide-react'
 import { AvatarImage, Avatar } from './ui/avatar'
+import { Badge } from './ui/badge'
 
 const Job = () => {
     return (

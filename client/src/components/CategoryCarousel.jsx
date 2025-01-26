@@ -26,11 +26,11 @@ const categories = [
 const CategoryCarousel = () => {
     return (
         <div>
-            <Carousel classname="w-full max-w-xl mx-auto my-20">
+            <Carousel className="w-full max-w-xl mx-auto my-20">
                 <CarouselContent>
                     {categories.map((el, index) => (
-                        <CarouselItem key={index} classname="md:basis-1/2 lg:basis-1/3">
-                            <Button classname="rounded-full" variant="outline">{el}</Button>
+                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                            <Button className="rounded-full" variant="outline">{el}</Button>
                         </CarouselItem>
                     ))}
                 </CarouselContent>
