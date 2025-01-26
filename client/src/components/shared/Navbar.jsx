@@ -8,9 +8,10 @@ import { AvatarImage } from '../ui/avatar'
 import { Button } from "../ui/button"
 import { LogOutIcon, User2 } from "lucide-react"
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 const Navbar = () => {
-    const user = false
+    const { user } = useSelector(state => state.authSlice)
     return (
         <div className='bg-white'>
             <div className='flex items-center justify-between mx-auto max-w-7xl h-16'>
@@ -33,29 +34,36 @@ const Navbar = () => {
                             ) :
                             (
                                 <Popover>
-                                    <PopoverTrigger>
-                                        <Avatar className="cursor-pointer rounded-full h-14 w-14">
-                                            <AvatarImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb5o1hIpacdSDsaGBsQjyMNGgH5ZTAuy_94Q&s" />
+                                    <PopoverTrigger asChild>
+                                        <Avatar className="cursor-pointer">
+                                            <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
                                         </Avatar>
                                     </PopoverTrigger>
                                     <PopoverContent className="w-80">
-                                        <div className="flex items-center space-y-3">
-                                            <Avatar className="cursor-pointer rounded-full h-14 w-14">
-                                                <AvatarImage className="w-full h-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb5o1hIpacdSDsaGBsQjyMNGgH5ZTAuy_94Q&s" />
-                                            </Avatar>
-                                            <div>
-                                                <h4 className='font-medium'>Patil Rohit</h4>
-                                                <p className="text-sm text-muted-foreground">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                        <div className=''>
+                                            <div className='flex gap-2 space-y-2'>
+                                                <Avatar className="cursor-pointer">
+                                                    <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                                                </Avatar>
+                                                <div>
+                                                    <h4 className='font-medium'>{user?.fullname}</h4>
+                                                    <p className='text-sm text-muted-foreground'>{user?.profile?.bio}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="flex flex-col gap-3 text-gray-600 mt-4">
-                                            <div className="flex items-center w-fit">
-                                                <User2 />
-                                                <Button variant="link">View Profile</Button>
-                                            </div>
-                                            <div className="w-fit flex items-center">
-                                                <LogOutIcon />
-                                                <Button variant="link">Logout</Button>
+                                            <div className='flex flex-col my-2 text-gray-600'>
+                                                {
+                                                    user && user.role === 'student' && (
+                                                        <div className='flex w-fit items-center gap-2 cursor-pointer'>
+                                                            <User2 />
+                                                            <Button variant="link"> <Link to="/profile">View Profile</Link></Button>
+                                                        </div>
+                                                    )
+                                                }
+
+                                                <div className='flex w-fit items-center gap-2 cursor-pointer'>
+                                                    <LogOut />
+                                                    <Button onClick={logoutHandler} variant="link">Logout</Button>
+                                                </div>
                                             </div>
                                         </div>
                                     </PopoverContent>
