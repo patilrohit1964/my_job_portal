@@ -3,8 +3,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import Avatar from 'react-avatar'
-import { AvatarImage } from '../ui/avatar'
+import { AvatarImage, Avatar } from '../ui/avatar'
 import { Button } from "../ui/button"
 import { LogOut, LogOutIcon, User2 } from "lucide-react"
 import { Link } from "react-router-dom"
@@ -12,6 +11,7 @@ import { useSelector } from "react-redux"
 
 const Navbar = () => {
     const { user } = useSelector(state => state.authSlice);
+    console.log(user)
     const logoutHandler = () => {
 
     }
@@ -39,14 +39,24 @@ const Navbar = () => {
                                 <Popover>
                                     <PopoverTrigger asChild>
                                         <Avatar className="cursor-pointer">
-                                            <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                                            <AvatarImage
+                                                src={user?.profile?.profilePhoto
+                                                    ? `http://localhost:5050/${user.profile.profilePhoto}`
+                                                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc-mqLayESeL4RE5ayMWt_nFEC3v3b4SvwuQ&s"}
+                                                alt="@shadcn"
+                                            />
                                         </Avatar>
                                     </PopoverTrigger>
                                     <PopoverContent className="w-80">
                                         <div className=''>
                                             <div className='flex gap-2 space-y-2'>
                                                 <Avatar className="cursor-pointer">
-                                                    <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                                                    <AvatarImage
+                                                        src={user?.profile?.profilePhoto
+                                                            ? `http://localhost:5050/${user.profile.profilePhoto}`
+                                                            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc-mqLayESeL4RE5ayMWt_nFEC3v3b4SvwuQ&s"}
+                                                        alt="@shadcn"
+                                                    />
                                                 </Avatar>
                                                 <div>
                                                     <h4 className='font-medium'>{user?.fullname}</h4>
@@ -58,7 +68,7 @@ const Navbar = () => {
                                                     user && user.role === 'student' && (
                                                         <div className='flex w-fit items-center gap-2 cursor-pointer'>
                                                             <User2 />
-                                                            <Button variant="link"> <Link to="/profile">View Profile</Link></Button>
+                                                            <Link to={"/profile"}><Button variant="link">View Profile</Button></Link>
                                                         </div>
                                                     )
                                                 }

@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux'
 const UpdateProfileDialog = ({ open, setOpen }) => {
     const [loading, setLoading] = useState(false);
     const { user } = useSelector(state => state.authSlice)
-    console.log(user)
     const [input, setInput] = useState({
         fullname: user?.fullname || "",
         email: user?.email || "",
@@ -19,6 +18,45 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         bio: user?.profile?.bio
     });
 
+    const changeEventHandler = (e) => {
+        const { name, value } = e.target
+        setInput({ ...input, [name]: value })
+    }
+    const changeFileHandler = (e) => {
+        setInput({ ...input, file: e.target.files?.[0] });
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("fullname", input.fullname);
+        formData.append("email", input.email);
+        formData.append("phoneNumber", input.phoneNumber);
+        formData.append("skills", input.skills);
+        formData.append("bio", input.bio);
+        if (input.file) {
+            formData.append("file", input.file);
+        }
+        console.log(input);
+
+        // try {
+        //     dispatch(setLoading(true))
+        //     const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
+        //         withCredentials: true,
+        //         headers: {
+        //             'Content-Type': 'multipart/form-data',
+        //         },
+        //     })
+        //     if (res.data.success) {
+        //         navigate("/");
+        //         toast.success('User registered successfully');
+        //         setInput({ fullname: "", email: "", phoneNumber: "", password: "", role: "student", file: "" });
+        //     }
+        // } catch (error) {
+        //     console.error(error?.message);
+        // } finally {
+        //     dispatch(setLoading(false));
+        // }
+    }
     return (
         <div>
             <Dialog open={open}>
@@ -26,15 +64,17 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                     <DialogHeader>
                         <DialogTitle>Update Profile</DialogTitle>
                     </DialogHeader>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         {/* form fields */}
                         <div className='grid gap-4 py-4'>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="fullname">Name</Label>
                                 <Input
-                                    id="name"
-                                    name="name"
+                                    id="fullname"
+                                    name="fullname"
+                                    type="text"
                                     value={input.fullname}
+                                    onChange={changeEventHandler}
                                     className="col-span-3"
                                 />
                             </div>
@@ -43,7 +83,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 <Input
                                     id="email"
                                     name="email"
+                                    type="email"
                                     value={input.email}
+                                    onChange={changeEventHandler}
                                     className="col-span-3"
                                 />
                             </div>
@@ -52,7 +94,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 <Input
                                     id="phoneNumber"
                                     name="phoneNumber"
+                                    type="tel"
                                     value={input.phoneNumber}
+                                    onChange={changeEventHandler}
                                     className="col-span-3"
                                 />
                             </div>
@@ -61,7 +105,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 <Input
                                     id="bio"
                                     name="bio"
+                                    type="text"
                                     value={input.bio}
+                                    onChange={changeEventHandler}
                                     className="col-span-3"
                                 />
                             </div>
@@ -70,7 +116,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 <Input
                                     id="skills"
                                     name="skills"
+                                    type="text"
                                     value={input.skills}
+                                    onChange={changeEventHandler}
                                     className="col-span-3"
                                 />
                             </div>
@@ -81,7 +129,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                     name="file"
                                     type="file"
                                     accept="application/pdf"
-                                    value={input.file}
+                                    onChange={changeFileHandler}
                                     className="col-span-3"
                                 />
                             </div>
