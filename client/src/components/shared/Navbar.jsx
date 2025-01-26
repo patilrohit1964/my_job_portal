@@ -11,7 +11,6 @@ import { useSelector } from "react-redux"
 
 const Navbar = () => {
     const { user } = useSelector(state => state.authSlice);
-    console.log(user)
     const logoutHandler = () => {
 
     }
