@@ -16,6 +16,9 @@ exports.register = async (req, res) => {
         .json({ message: "All fields are required", success: false });
     }
 
+    const fileUri = getDataUri(req.file);
+    const cloudResponce = await Cloudinary.uploader.upload(fileUri.content);
+
     if (!validator.isEmail(email)) {
       return res
         .status(httpStatus.NOT_ACCEPTABLE)
@@ -37,7 +40,7 @@ exports.register = async (req, res) => {
       password: hashedPassword,
       role,
       profile: {
-        profilePhoto: req?.file?.filename || "",
+        profilePhoto: cloudResponce?.secure_url || "",
       },
     });
     return res
