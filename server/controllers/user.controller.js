@@ -142,10 +142,10 @@ exports.updateProfile = async (req, res) => {
     user.profile.resume = req?.file?.filename || user.profile.resume;
 
     // Placeholder for Cloudinary resume upload logic
-    // if (req.file) {
-    //   const resumeUrl = await uploadToCloudinary(req.file);
-    //   user.profile.resume = resumeUrl;
-    // }
+    if (req.file) {
+      const resumeUrl = await uploadToCloudinary(req.file);
+      user.profile.resume = resumeUrl;
+    }
 
     // Save changes
     await user.save();
