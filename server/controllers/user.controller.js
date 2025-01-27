@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { default: status } = require("http-status");
 const getDataUri = require("../utils/dataUri");
-const { cloudinary_js_config } = require("../utils/cloudinary");
+const Cloudinary = require("../utils/cloudinary");
 exports.register = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, password, role } = req.body;
@@ -141,13 +141,16 @@ exports.updateProfile = async (req, res) => {
     user.phoneNumber = phoneNumber || user.phoneNumber;
     user.profile.bio = bio || user.profile.bio;
     user.profile.skills = skills ? skills.split(",") : user.profile.skills;
-    user.profile.resume = req?.file?.filename || user.profile.resume;
+    // user.profile.resume = req?.file?.filename || user.profile.resume;
 
     // Placeholder for Cloudinary resume upload logic
     if (req.file) {
       const fileUrl = getDataUri(req.file);
-      const cloudResponce = await cloudinary.upl(req.file);
-      user.profile.resume = resumeUrl;
+      const cloudResponce = await Cloudinary.uploader.upload(fileUrl.content);
+      if (cloudResponce) {
+        user.profile.resume = cloudResponce.secure_url;
+        user.profile.resumeOriginalName = req.file.originalname;
+      }
     }
 
     // Save changes
