@@ -1,20 +1,24 @@
+import { setAllJobs } from '@/redux/jobSlice'
 import { JOB_API_END_POINT } from '@/utils/constants'
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 const useGetAllJob = () => {
+    const dispatch = useDispatch();
     useEffect(() => {
         try {
             const fetchAllJobs = async () => {
-                const { data } = await axios.get(`${JOB_API_END_POINT}/all/jobs`)
+                const { data } = await axios.get(`${JOB_API_END_POINT}/all/jobs`);
+                if (data.status) {
+                    dispatch(setAllJobs(data.jobs));
+                }
             }
+            fetchAllJobs();
         } catch (error) {
-
+            console.log(error?.message);
         }
     }, [])
-    return (
-        <div>useGetAllJob</div>
-    )
 }
 
 export default useGetAllJob
