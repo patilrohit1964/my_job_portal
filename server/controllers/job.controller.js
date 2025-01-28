@@ -26,7 +26,7 @@ exports.postJob = async (req, res) => {
     ) {
       return res
         .status(httpsStatus.BAD_REQUEST)
-        .json({ message: "All fields are required" });
+        .json({ message: "All fields are required", status: false });
     }
 
     const job = await Job.create({
@@ -44,10 +44,10 @@ exports.postJob = async (req, res) => {
 
     res
       .status(httpsStatus.CREATED)
-      .json({ message: "Job posted successfully", job });
+      .json({ message: "Job posted successfully", job, status: true });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", status: false });
   }
 };
 
@@ -69,17 +69,18 @@ exports.getAllJobs = async (req, res) => {
     if (!jobs) {
       return res
         .status(httpsStatus.NOT_FOUND)
-        .json({ message: "No jobs found" });
+        .json({ message: "No jobs found", status: false });
     }
     return res.status(httpsStatus.OK).json({
       jobs,
       message: "Jobs fetched successfully",
+      status: true,
     });
   } catch (error) {
     console.error(error);
     return res
       .status(httpsStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Server error" });
+      .json({ message: "Server error", status: false });
   }
 };
 
@@ -89,17 +90,18 @@ exports.getJobById = async (req, res) => {
     if (!job) {
       return res
         .status(httpsStatus.NOT_FOUND)
-        .json({ message: "Job not found" });
+        .json({ message: "Job not found", status: false });
     }
     return res.status(httpsStatus.OK).json({
       message: "Job fetched successfully",
       job,
+      status: true,
     });
   } catch (error) {
     console.error(error);
     return res
       .status(httpsStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Server error" });
+      .json({ message: "Server error", status: false });
   }
 };
 
@@ -111,16 +113,17 @@ exports.getAdminJobs = async (req, res) => {
     if (!jobs) {
       return res
         .status(httpsStatus.NOT_FOUND)
-        .json({ message: "No jobs found" });
+        .json({ message: "No jobs found", status: false });
     }
     return res.status(httpsStatus.OK).json({
       message: "Jobs fetched successfully",
       jobs,
+      status: true,
     });
   } catch (error) {
     console.error(error);
     return res
       .status(httpsStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Server error" });
+      .json({ message: "Server error", status: false });
   }
 };
