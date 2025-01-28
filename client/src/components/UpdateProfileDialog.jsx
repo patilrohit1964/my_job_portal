@@ -52,7 +52,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 formData.append(key, value);
             }
         });
-        
+
         try {
             setLoading(true);
             const res = await axios.put(`${USER_API_END_POINT}/profile/update`, formData, {
@@ -121,7 +121,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button className="w-full my-4" type="submit" disabled={loading}>
+                        <Button className={`w-full my-4 ${loading && 'cursor-not-allowed'}`} type="submit" disabled={loading}>
                             {loading ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

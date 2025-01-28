@@ -20,7 +20,7 @@ const Profile = () => {
                 <div className='flex justify-between'>
                     <div className='flex items-center gap-4'>
                         <Avatar className="h-24 w-24 border border-gray-400">
-                            <AvatarImage src={user?.profile.profilePhoto ? `http://localhost:5050/${user?.profile?.profilePhoto}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNp0Nv1kGgeyKZCHKvg8V7Q9_3RwZUkxz8bw&s"} alt="profile" />
+                            <AvatarImage src={user?.profile.profilePhoto ? `${user?.profile?.profilePhoto}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNp0Nv1kGgeyKZCHKvg8V7Q9_3RwZUkxz8bw&s"} alt="profile" />
                         </Avatar>
                         <div>
                             <h1>{user?.fullname}</h1>
@@ -52,7 +52,7 @@ const Profile = () => {
                 <div className='grid w-full max-w-sm items-center gap-1.5'>
                     <Label className="text-md font-bold">Resume</Label>
                     {
-                        user?.profile?.resume ? <a href={`http://localhost:5050/${user?.profile?.resume}`} target='_blank' className='text-blue-500 w-full hover:underline'>{user?.profile?.resume}</a> : <span>N/A</span>
+                        user?.profile?.resume ? <a href={`${user?.profile?.resume}`} target='_blank' className='text-blue-500 w-full hover:underline'>{user?.profile?.resumeOriginalName}</a> : <span>N/A</span>
                     }
                 </div>
                 <div className='max-w-4xl mx-auto bg-white rounded-2xl'>

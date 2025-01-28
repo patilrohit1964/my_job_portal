@@ -10,6 +10,7 @@ import { USER_API_END_POINT } from '@/utils/constants'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading } from '@/redux/authSlice'
+import { Loader2 } from 'lucide-react'
 const Signup = () => {
     const [input, setInput] = useState({
         fullname: "",
@@ -19,6 +20,7 @@ const Signup = () => {
         role: "student",
         file: ""
     })
+    const [focusedInput, setFocusedInput] = useState("")
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -74,19 +76,55 @@ const Signup = () => {
                     <h1 className='font-bold text-xl mb-5'>Sign Up</h1>
                     <div>
                         <Label>Full Name</Label>
-                        <Input type="text" name="fullname" placeholder="enter your fullname" value={input.fullname} onChange={changeEventHandler} />
+                        <Input 
+                            type="text" 
+                            name="fullname" 
+                            placeholder="enter your fullname" 
+                            value={input.fullname} 
+                            onChange={changeEventHandler}
+                            onFocus={() => setFocusedInput("fullname")}
+                            onBlur={() => setFocusedInput("")}
+                            className={focusedInput === "fullname" ? "border-blue-500 ring-2 ring-blue-200" : ""}
+                        />
                     </div>
-                    <div>
+                    <div className='mt-3'>
                         <Label>Phone Number</Label>
-                        <Input type="text" name="phoneNumber" placeholder="enter your phone number" value={input.phoneNumber} onChange={changeEventHandler} />
+                        <Input 
+                            type="text" 
+                            name="phoneNumber" 
+                            placeholder="enter your phone number" 
+                            value={input.phoneNumber} 
+                            onChange={changeEventHandler}
+                            onFocus={() => setFocusedInput("phoneNumber")}
+                            onBlur={() => setFocusedInput("")}
+                            className={focusedInput === "phoneNumber" ? "border-blue-500 ring-2 ring-blue-200" : ""}
+                        />
                     </div>
-                    <div>
+                    <div className='mt-3'>
                         <Label>Email</Label>
-                        <Input type="text" name="email" placeholder="enter your email" value={input.email} onChange={changeEventHandler} />
+                        <Input 
+                            type="text" 
+                            name="email" 
+                            placeholder="enter your email" 
+                            value={input.email} 
+                            onChange={changeEventHandler}
+                            onFocus={() => setFocusedInput("email")}
+                            onBlur={() => setFocusedInput("")}
+                            className={focusedInput === "email" ? "border-blue-500 ring-2 ring-blue-200" : ""}
+                        />
                     </div>
-                    <div>
+                    <div className='mt-3'>
                         <Label>Password</Label>
-                        <Input type="text" name="password" placeholder="enter your password" value={input.password} onChange={changeEventHandler} />
+                        <Input 
+                            type="text" 
+                            name="password" 
+                            placeholder="enter your password" 
+                            value={input.password} 
+                            onChange={changeEventHandler}
+                            onFocus={() => setFocusedInput("password")}
+                            onBlur={() => setFocusedInput("")}
+                            className={focusedInput === "password" ? "border-blue-500 ring-2 ring-blue-200" : ""}
+                        />
                     </div>
                     <div className='flex items-center justify-between mt-3'>
                         <RadioGroup className="flex items-center gap-4 my-4">
@@ -101,7 +139,14 @@ const Signup = () => {
                         </RadioGroup>
                         <div className='flex items-center gap-2'>
                             <Label>Profile</Label>
-                            <Input accept="image/*" type="file" className="cursor-pointer" onChange={changeFileHandler} />
+                            <Input 
+                                accept="image/*" 
+                                type="file" 
+                                className={`cursor-pointer ${focusedInput === "file" ? "border-blue-500 ring-2 ring-blue-200" : ""}`}
+                                onChange={changeFileHandler}
+                                onFocus={() => setFocusedInput("file")}
+                                onBlur={() => setFocusedInput("")}
+                            />
                         </div>
                     </div>
                     {loading ? <Button className="w-full my-4" disabled={loading}><Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please Wait</Button> :
