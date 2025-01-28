@@ -103,7 +103,6 @@ exports.login = async (req, res) => {
       .cookie("token", token, {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-        secure: true,
       })
       .json({ message: `Welcome back ${user?.fullname}`, success: true, user });
   } catch (error) {

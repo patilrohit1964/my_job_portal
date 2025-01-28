@@ -3,8 +3,6 @@ const httpStatus = require("http-status").status;
 const isAuthenticated = async (req, res, next) => {
   try {
     const token = req.cookies.token;
-    console.log(req.cookies)
-    console.log(token);
     if (!token) {
       return res
         .status(httpStatus.UNAUTHORIZED)
