@@ -3,7 +3,6 @@ const User = require("../models/userSchema.model");
 const httpStatus = require("http-status").status;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { default: status } = require("http-status");
 const getDataUri = require("../utils/dataUri");
 const Cloudinary = require("../utils/cloudinary");
 exports.register = async (req, res) => {
@@ -57,6 +56,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
+
     if (!email || !password || !role) {
       return res.status(httpStatus.NOT_ACCEPTABLE).json({
         message: "Something wrong all fields required",
@@ -89,7 +89,6 @@ exports.login = async (req, res) => {
     const token = jwt.sign(tokenData, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
-
     user = {
       _id: user?._id,
       fullname: user?.fullname,
@@ -104,7 +103,6 @@ exports.login = async (req, res) => {
       .cookie("token", token, {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-        sameSite: "none",
         secure: true,
       })
       .json({ message: `Welcome back ${user?.fullname}`, success: true, user });

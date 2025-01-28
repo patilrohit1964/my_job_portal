@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const connectDb = require("./utils/db");
 const userRouter = require("./routes/user.router");
-const path = require("path");
 const compnayRouter = require("./routes/company.router");
 const jobRouter = require("./routes/job.router");
 const applicationRouter = require("./routes/application.router");
