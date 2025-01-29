@@ -10,7 +10,7 @@ const LatestJobs = () => {
             {/* job card */}
             <div className='grid grid-cols-3 gap-4 my-8'>
                 {
-                    allJobs?.length > 0 && allJobs?.slice(0, 6)?.map((job, index) => <LatestJobCards key={job._id} job={job} />)
+                    allJobs?.length < 0 ? <span>No Jobs</span> : allJobs?.slice(0, 6)?.map((job, index) => <LatestJobCards key={job._id} job={job} />)
                 }
             </div>
         </div>
