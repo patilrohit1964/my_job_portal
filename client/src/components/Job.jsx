@@ -7,9 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 const Job = ({ job }) => {
 
-    console.log(job)
     const navigate = useNavigate();
-
     return (
         <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100'>
             <div className='flex items-center justify-between'>
