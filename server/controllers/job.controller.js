@@ -86,7 +86,7 @@ exports.getAllJobs = async (req, res) => {
 
 exports.getJobById = async (req, res) => {
   try {
-    const job = await Job.findById(req.params.id).populate("company");
+    const job = await Job.findById({ _id: req.params.id }).populate("company");
     if (!job) {
       return res
         .status(httpsStatus.NOT_FOUND)

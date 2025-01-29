@@ -16,12 +16,12 @@ const Jobs = () => {
             <FilterCard />
           </div>
           {
-            allJobs.length < 0 ? <span>Job Not Found</span> :
+            allJobs?.length < 0 ? <span>Job Not Found</span> :
               (
                 <div className='flex-1 h-[88vh] overflow-y-auto pb-5'>
                   <div className='grid grid-cols-3 gap-4'>
                     {
-                      allJobs.map((job, index) => (
+                      allJobs?.map((job, index) => (
                         <div key={job?._id}>
                           <Job job={job} />
                         </div>

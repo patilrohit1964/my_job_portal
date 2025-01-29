@@ -28,8 +28,8 @@ const JobDescription = () => {
         } catch (error) {
             console.log(error?.message);
         }
-    }, [id, dispatch, singleJob?._id])
-    console.log(singleJob)
+    }, [id, dispatch, singleJob?._id]);
+    console.log(singleJob,"single jobs");
     return (
         <div className='max-w-7xl mx-auto my-10'>
             <div className='flex items-center justify-between'>
