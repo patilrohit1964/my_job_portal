@@ -17,7 +17,7 @@ const JobDescription = () => {
     const dispatch = useDispatch()
     const { singleJob } = useSelector(state => state.jobSlice);
     const { user } = useSelector(state => state.authSlice);
-    const applied = singleJob?.applications?.some(application => application?.applicant === user?._id) || false
+    const applied = singleJob?.applications?.some(application => application?.applier === user?._id) || false
     const [isApplied, setIsApplied] = useState(applied);
 
     const applyJobHandler = async () => {
@@ -28,7 +28,8 @@ const JobDescription = () => {
             console.log(data);
             if (data.success) {
                 setIsApplied(true); //update application status
-                const updateSingleJob = { ...singleJob, applications: [...singleJob.applications, { applicant: user?._id }] }
+                const updateSingleJob = { ...singleJob, applications: [...singleJob.applications, { applier: user?._id }] }
+                dispatch(setSingleJob(updateSingleJob))
                 toast.success(data?.message);
             }
         } catch (error) {
@@ -43,6 +44,7 @@ const JobDescription = () => {
                 });
                 if (data.status) {
                     dispatch(setSingleJob(data.job));
+                    setIsApplied(data?.job?.applications.some(application => application?.applier === user?._id)) //ensure state of user is applied already or not
                 }
             }
             fetchSingleJobs();
