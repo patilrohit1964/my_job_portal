@@ -28,7 +28,7 @@ const CategoryCarousel = () => {
         <section className="w-full max-w-5xl mx-auto my-16 px-4 md:px-0">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">Explore Categories</h2>
 
-            <Carousel className="w-full overflow-x-hidden md:overflow-x-auto">
+            <Carousel className="w-full overflow-x-hidden">
                 <CarouselContent className="flex items-center">
                     {categories.map((el, index) => (
                         <CarouselItem

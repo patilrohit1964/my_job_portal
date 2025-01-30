@@ -14,8 +14,8 @@ const Job = ({ job }) => {
         <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-            className="p-6 rounded-lg shadow-lg bg-white border border-gray-200 hover:shadow-xl transition-all md:p-8"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="p-6 rounded-lg shadow-lg bg-white border border-gray-200 hover:shadow-xl transition-all md:p-8 cursor-pointer"
         >
             {/* Top Section */}
             <div className="flex items-center justify-between">
@@ -27,9 +27,10 @@ const Job = ({ job }) => {
 
             {/* Company Info */}
             <div className="flex items-center gap-3 my-3">
-                <Avatar className="border border-gray-300">
+                <Avatar className="border border-gray-300 rounded-full p-1">
                     <AvatarImage
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNp0Nv1kGgeyKZCHKvg8V7Q9_3RwZUkxz8bw&s"
+                        alt="Company Logo"
                     />
                 </Avatar>
                 <div>
@@ -55,12 +56,12 @@ const Job = ({ job }) => {
             <div className="flex items-center mt-5 gap-4">
                 <Button
                     variant="outline"
-                    className="hover:bg-gray-100 transition-all w-full sm:w-auto"
+                    className="hover:bg-gray-100 transition-all w-full sm:w-auto focus:ring-2 focus:ring-purple-600"
                     onClick={() => navigate(`/jobs/description/${job?._id}`)}
                 >
                     Details
                 </Button>
-                <Button className="bg-purple-700 hover:bg-purple-900 text-white transition-all w-full sm:w-auto">
+                <Button className="bg-purple-700 hover:bg-purple-900 text-white transition-all w-full sm:w-auto focus:ring-2 focus:ring-purple-600">
                     Save for later
                 </Button>
             </div>
