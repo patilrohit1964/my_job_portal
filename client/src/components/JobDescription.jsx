@@ -8,6 +8,7 @@ import { setSingleJob } from '@/redux/jobSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from '@/utils/constants'
 import moment from 'moment'
+import { toast } from 'react-toastify'
 
 const JobDescription = () => {
 
@@ -20,10 +21,13 @@ const JobDescription = () => {
 
     const applyJobHandler = async () => {
         try {
-            await axios.post(`${APPLICATION_API_END_POINT}/apply/${id}`, {}, {
+            const { data } = await axios.post(`${APPLICATION_API_END_POINT}/apply/${id}`, {}, {
                 withCredentials: true
             });
-            alert("Application submitted successfully!");
+            console.log(data)
+            if (data.success) {
+                toast.success(data?.message)
+            }
         } catch (error) {
             console.log(error?.message);
         }
@@ -55,7 +59,7 @@ const JobDescription = () => {
                         <Badge className='text-[#7209b7] font-bold' variant="ghost">{singleJob?.salary}</Badge>
                     </div>
                 </div>
-                <Button disabled={applied} className={`rounded-lg ${applied ? "bg-gray-600 cursor-not-allowed" : "bg-[#7209b7] hover:bg-[#5f32ad]"}`}>{applied ? "Already applied" : "Apply Now"}</Button>
+                <Button disabled={applied} className={`rounded-lg ${applied ? "bg-gray-600 cursor-not-allowed" : "bg-[#7209b7] hover:bg-[#5f32ad]"}`} onClick={applied ? null : applyJobHandler}>{applied ? "Already applied" : "Apply Now"}</Button>
             </div>
             <h1 className='border-b-2 border-b-gray-300 font-medium py-4'>Job Description</h1>
             <div className='my-4'>
