@@ -6,17 +6,28 @@ import useGetSingleJob from '@/hooks/usetGetSingleJob'
 import axios from 'axios'
 import { setSingleJob } from '@/redux/jobSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { JOB_API_END_POINT } from '@/utils/constants'
+import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from '@/utils/constants'
 import moment from 'moment'
 
 const JobDescription = () => {
 
-    const applied = true;
+
     const { id } = useParams();
     const dispatch = useDispatch()
     const { singleJob } = useSelector(state => state.jobSlice);
     const { user } = useSelector(state => state.authSlice);
+    const applied = singleJob?.applications?.some(application => application?.applicant === user?._id) || false
 
+    const applyJobHandler = async () => {
+        try {
+            await axios.post(`${APPLICATION_API_END_POINT}/apply/${id}`, {}, {
+                withCredentials: true
+            });
+            alert("Application submitted successfully!");
+        } catch (error) {
+            console.log(error?.message);
+        }
+    }
     useEffect(() => {
         try {
             const fetchSingleJobs = async () => {
@@ -32,7 +43,7 @@ const JobDescription = () => {
             console.log(error?.message);
         }
     }, [id, dispatch, user?._id]);
-   
+
     return (
         <div className='max-w-7xl mx-auto my-10'>
             <div className='flex items-center justify-between'>
