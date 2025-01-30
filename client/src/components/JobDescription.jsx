@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { useParams } from 'react-router-dom'
@@ -18,15 +18,18 @@ const JobDescription = () => {
     const { singleJob } = useSelector(state => state.jobSlice);
     const { user } = useSelector(state => state.authSlice);
     const applied = singleJob?.applications?.some(application => application?.applicant === user?._id) || false
+    const [isApplied, setIsApplied] = useState(applied);
 
     const applyJobHandler = async () => {
         try {
-            const { data } = await axios.post(`${APPLICATION_API_END_POINT}/apply/${id}`, {}, {
+            const { data } = await axios.get(`${APPLICATION_API_END_POINT}/apply/${id}`, {
                 withCredentials: true
             });
-            console.log(data)
+            console.log(data);
             if (data.success) {
-                toast.success(data?.message)
+                setIsApplied(true); //update application status
+                const updateSingleJob = { ...singleJob, applications: [...singleJob.applications, { applicant: user?._id }] }
+                toast.success(data?.message);
             }
         } catch (error) {
             console.log(error?.message);
