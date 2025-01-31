@@ -7,6 +7,7 @@ import Home from './components/Home'
 import Jobs from './components/Jobs'
 import Profile from './components/Profile'
 import JobDescription from './components/JobDescription'
+import Companies from './components/admin/Companies'
 
 
 
@@ -39,6 +40,12 @@ const appRoutes = createBrowserRouter([
     path: "/profile",
     element: <Profile />
   },
+
+  // admin routes
+  {
+    path: "/admin/companies",
+    element: <Companies />
+  }
 ])
 const App = () => {
   return (
