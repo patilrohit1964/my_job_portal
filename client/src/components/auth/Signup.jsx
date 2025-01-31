@@ -9,7 +9,7 @@ import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constants'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
-import { setLoading } from '@/redux/authSlice'
+import { setLoading, setUser } from '@/redux/authSlice'
 import { Loader2 } from 'lucide-react'
 const Signup = () => {
     const [input, setInput] = useState({
@@ -53,6 +53,7 @@ const Signup = () => {
                 },
             })
             if (res.data.success) {
+                dispatch(setUser(res.data.user));
                 navigate("/");
                 toast.success('User registered successfully');
                 setInput({ fullname: "", email: "", phoneNumber: "", password: "", role: "student", file: "" });
@@ -76,11 +77,11 @@ const Signup = () => {
                     <h1 className='font-bold text-xl mb-5'>Sign Up</h1>
                     <div>
                         <Label>Full Name</Label>
-                        <Input 
-                            type="text" 
-                            name="fullname" 
-                            placeholder="enter your fullname" 
-                            value={input.fullname} 
+                        <Input
+                            type="text"
+                            name="fullname"
+                            placeholder="enter your fullname"
+                            value={input.fullname}
                             onChange={changeEventHandler}
                             onFocus={() => setFocusedInput("fullname")}
                             onBlur={() => setFocusedInput("")}
@@ -89,11 +90,11 @@ const Signup = () => {
                     </div>
                     <div className='mt-3'>
                         <Label>Phone Number</Label>
-                        <Input 
-                            type="text" 
-                            name="phoneNumber" 
-                            placeholder="enter your phone number" 
-                            value={input.phoneNumber} 
+                        <Input
+                            type="text"
+                            name="phoneNumber"
+                            placeholder="enter your phone number"
+                            value={input.phoneNumber}
                             onChange={changeEventHandler}
                             onFocus={() => setFocusedInput("phoneNumber")}
                             onBlur={() => setFocusedInput("")}
@@ -102,11 +103,11 @@ const Signup = () => {
                     </div>
                     <div className='mt-3'>
                         <Label>Email</Label>
-                        <Input 
-                            type="text" 
-                            name="email" 
-                            placeholder="enter your email" 
-                            value={input.email} 
+                        <Input
+                            type="text"
+                            name="email"
+                            placeholder="enter your email"
+                            value={input.email}
                             onChange={changeEventHandler}
                             onFocus={() => setFocusedInput("email")}
                             onBlur={() => setFocusedInput("")}
@@ -115,11 +116,11 @@ const Signup = () => {
                     </div>
                     <div className='mt-3'>
                         <Label>Password</Label>
-                        <Input 
-                            type="text" 
-                            name="password" 
-                            placeholder="enter your password" 
-                            value={input.password} 
+                        <Input
+                            type="text"
+                            name="password"
+                            placeholder="enter your password"
+                            value={input.password}
                             onChange={changeEventHandler}
                             onFocus={() => setFocusedInput("password")}
                             onBlur={() => setFocusedInput("")}
@@ -139,9 +140,9 @@ const Signup = () => {
                         </RadioGroup>
                         <div className='flex items-center gap-2'>
                             <Label>Profile</Label>
-                            <Input 
-                                accept="image/*" 
-                                type="file" 
+                            <Input
+                                accept="image/*"
+                                type="file"
                                 className={`cursor-pointer ${focusedInput === "file" ? "border-blue-500 ring-2 ring-blue-200" : ""}`}
                                 onChange={changeFileHandler}
                                 onFocus={() => setFocusedInput("file")}

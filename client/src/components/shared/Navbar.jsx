@@ -58,30 +58,55 @@ const Navbar = () => {
                     className={`md:flex items-center gap-6 font-medium absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent transition-transform transform ${menuOpen ? "translate-y-0" : "-translate-y-[200%]"
                         } md:translate-y-0 shadow-md md:shadow-none p-6 md:p-0`}
                 >
-                    <li>
-                        <Link
-                            to="/"
-                            className="block py-2 px-4 hover:text-[#f83002] transition-colors"
-                        >
-                            Home
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/jobs"
-                            className="block py-2 px-4 hover:text-[#f83002] transition-colors"
-                        >
-                            Jobs
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/browse"
-                            className="block py-2 px-4 hover:text-[#f83002] transition-colors"
-                        >
-                            Browse
-                        </Link>
-                    </li>
+                    {
+                        user && user?.role === "recruiter" ? (
+                            <>
+                                < li >
+                                    <Link
+                                        to="/admin/companies"
+                                        className="block py-2 px-4 hover:text-[#f83002] transition-colors"
+                                    >
+                                        Companies
+                                    </Link>
+                                </li>
+                                < li >
+                                    <Link
+                                        to="/admin/jobs"
+                                        className="block py-2 px-4 hover:text-[#f83002] transition-colors"
+                                    >
+                                        Jobs
+                                    </Link>
+                                </li>
+                            </>
+                        )
+                            :
+                            <>
+                                < li >
+                                    <Link
+                                        to="/"
+                                        className="block py-2 px-4 hover:text-[#f83002] transition-colors"
+                                    >
+                                        Home
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/jobs"
+                                        className="block py-2 px-4 hover:text-[#f83002] transition-colors"
+                                    >
+                                        Jobs
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/browse"
+                                        className="block py-2 px-4 hover:text-[#f83002] transition-colors"
+                                    >
+                                        Browse
+                                    </Link>
+                                </li>
+                            </>
+                    }
                 </ul>
 
                 {/* User Authentication */}
@@ -144,7 +169,7 @@ const Navbar = () => {
                     </Popover>
                 )}
             </div>
-        </nav>
+        </nav >
     );
 };
 

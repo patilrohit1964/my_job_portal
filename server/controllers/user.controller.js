@@ -32,7 +32,7 @@ exports.register = async (req, res) => {
       });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({
+    const newUser = await User.create({
       fullname,
       email,
       phoneNumber,
@@ -42,9 +42,11 @@ exports.register = async (req, res) => {
         profilePhoto: cloudResponce?.secure_url || "",
       },
     });
-    return res
-      .status(httpStatus.CREATED)
-      .json({ message: "User created successfully", success: true });
+    return res.status(httpStatus.CREATED).json({
+      message: "User created successfully",
+      success: true,
+      user: newUser,
+    });
   } catch (error) {
     console.log(error);
     return res
