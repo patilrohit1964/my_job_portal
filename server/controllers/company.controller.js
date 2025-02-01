@@ -1,3 +1,4 @@
+const { default: status } = require("http-status");
 const Company = require("../models/company.model");
 const httpStatus = require("http-status").status;
 
@@ -5,23 +6,30 @@ exports.registerCompany = async (req, res) => {
   try {
     const { companyName } = req.body;
     if (!companyName) {
-      return res.status(400).json({ message: "Company name is required" });
+      return res.status(400).json({
+        message: "Company name is required",
+        status: false,
+      });
     }
     let company = await Company.findOne({ name: companyName });
     if (company) {
-      return res.status(409).json({ message: "Company already exists" });
+      return res
+        .status(httpStatus.CONFLICT)
+        .json({ message: "Company already exists" });
     }
     company = await Company.create({
       name: companyName,
       userId: req.id,
     });
 
-    res
-      .status(httpStatus.CREATED)
-      .json({ message: "Company registered successfully", company });
+    res.status(httpStatus.CREATED).json({
+      message: "Company registered successfully",
+      company,
+      status: true,
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", status: false });
   }
 };
 
