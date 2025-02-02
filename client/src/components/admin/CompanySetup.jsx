@@ -135,10 +135,13 @@ const CompanySetup = () => {
               />
             </motion.div>
             <div>
-              {
-                <img src={singleCompany?.logo} alt="Company Logo" />
-              }
+              {input.file ? (
+                <img src={URL.createObjectURL(input.file)} alt="Company Logo" className="w-32 h-32 object-cover rounded-md" />
+              ) : (
+                singleCompany?.logo && <img src={singleCompany.logo} alt="Company Logo" className="w-32 h-32 object-cover rounded-md" />
+              )}
             </div>
+
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}
