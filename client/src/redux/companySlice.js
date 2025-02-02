@@ -1,4 +1,4 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
 
 const companySlice = createSlice({
   name: "company",
@@ -13,5 +13,5 @@ const companySlice = createSlice({
   },
 });
 
-const { setSingleCompany } = companySlice.actions;
+export const { setSingleCompany } = companySlice.actions;
 export default companySlice.reducer;

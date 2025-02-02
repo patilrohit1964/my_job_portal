@@ -1,4 +1,3 @@
-const { default: status } = require("http-status");
 const Company = require("../models/company.model");
 const httpStatus = require("http-status").status;
 
@@ -15,7 +14,7 @@ exports.registerCompany = async (req, res) => {
     if (company) {
       return res
         .status(httpStatus.CONFLICT)
-        .json({ message: "Company already exists" });
+        .json({ message: "Company already exists", success: false });
     }
     company = await Company.create({
       name: companyName,
@@ -25,11 +24,11 @@ exports.registerCompany = async (req, res) => {
     res.status(httpStatus.CREATED).json({
       message: "Company registered successfully",
       company,
-      status: true,
+      success: true,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error", status: false });
+    res.status(500).json({ message: "Server error", success: false });
   }
 };
 
