@@ -1,62 +1,67 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Edit2, MoreHorizontal } from 'lucide-react'
+import axios from 'axios'
+import { COMPANY_API_END_POINT } from '@/utils/constants'
+import { toast } from 'react-toastify'
+import moment from 'moment'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const CompaniesTable = () => {
+
+    const companies = useSelector(state => state.companySlice);
+    const navigate = useNavigate();
+
+    console.log(companies);
+
     return (
         <div>
-            <Table>
-                <TableCaption>A List Of your recent registerd Companies</TableCaption>
+            {/* <Table>
+                <TableCaption>{companies?.length < 0 && "A List Of your recent registerd Companies"}</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead>Logo</TableHead>
                         <TableHead>Name</TableHead>
                         <TableHead>Date</TableHead>
-                        <TableHead>Action</TableHead>
+                        <TableHead className="text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow>
-                        <TableCell>
-                            <Avatar className="border border-gray-300 rounded-full p-1">
-                                <AvatarImage
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNp0Nv1kGgeyKZCHKvg8V7Q9_3RwZUkxz8bw&s"
-                                    alt="Company Logo"
-                                />
-                            </Avatar>
-                        </TableCell>
-                        <TableCell>Google</TableCell>
-                        <TableCell>2022-01-01</TableCell>
-                        <TableCell className="text-right cursor-pointer">
-                            <Popover>
-                                <PopoverTrigger>
-                                    <MoreHorizontal />
-                                </PopoverTrigger>
-                                <PopoverContent className="w-32">
-                                    <div className='flex items-center gap-2 w-fit cursor-pointer'>
-                                        <Edit2 />
-                                        <span>Edit</span>
-                                    </div>
-                                </PopoverContent>
-                            </Popover>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Logo2</TableCell>
-                        <TableCell>Company2</TableCell>
-                        <TableCell>2022-02-01</TableCell>
-                        <TableCell>Delete</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Logo3</TableCell>
-                        <TableCell>Company3</TableCell>
-                        <TableCell>2022-03-01</TableCell>
-                        <TableCell>View</TableCell>
-                    </TableRow>
+                    {
+                        companies?.map((company) => (
+                            <TableRow key={company?._id}>
+                                <TableCell>
+                                    <Avatar className="border border-gray-300 rounded-full p-1">
+                                        <AvatarImage
+                                            src={company?.logo || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNp0Nv1kGgeyKZCHKvg8V7Q9_3RwZUkxz8bw&s"}
+                                            alt="Company Logo"
+                                        />
+                                    </Avatar>
+                                </TableCell>
+                                <TableCell>{company?.name}</TableCell>
+                                <TableCell>{moment(company?.createAt).format("DD MMM, YYYY")}</TableCell>
+                                <TableCell className="text-right cursor-pointer">
+                                    <Popover>
+                                        <PopoverTrigger>
+                                            <MoreHorizontal />
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-32">
+                                            <div className='flex items-center gap-2 w-fit cursor-pointer'>
+                                                <Edit2 />
+                                                <span onClick={() => navigate(`/admin/companies/${company?._id}`)}>Edit</span>
+                                            </div>
+                                        </PopoverContent>
+                                    </Popover>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    }
+
                 </TableBody>
-            </Table>
+            </Table> */}
         </div>
     )
 }

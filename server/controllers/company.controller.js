@@ -38,10 +38,10 @@ exports.getCompany = async (req, res) => {
     const company = await Company.find({ userId: req.id });
     if (!company) {
       return res
-        .status(httpStatus.ALREADY_REPORTED)
-        .json({ message: "Company not found" });
+        .status(httpStatus.NOT_FOUND)
+        .json({ message: "Company not found", success: false });
     }
-    res.json(company);
+    res.status(httpStatus.OK).json({ company, success: true });
   } catch (error) {
     console.error(error);
     res

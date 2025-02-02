@@ -1,16 +1,16 @@
+import { setLoading, setUser } from '@/redux/authSlice'
+import { USER_API_END_POINT } from '@/utils/constants'
+import axios from 'axios'
+import { Loader2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Navbar from '../shared/Navbar'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { RadioGroup } from '../ui/radio-group'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { USER_API_END_POINT } from '@/utils/constants'
-import { toast } from 'react-toastify'
-import { useDispatch, useSelector } from 'react-redux'
-import { setLoading, setUser } from '@/redux/authSlice'
-import { Loader2 } from 'lucide-react'
 const Signup = () => {
     const [input, setInput] = useState({
         fullname: "",
