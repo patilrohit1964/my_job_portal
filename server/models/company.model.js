@@ -14,10 +14,10 @@ const companySchema = new mongoose.Schema(
       type: String,
     },
     location: {
-      type: Number,
+      type: String,
     },
     logo: {
-      type: Number,
+      type: String,
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,

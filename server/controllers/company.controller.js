@@ -77,7 +77,7 @@ exports.updateCompany = async (req, res) => {
     if (file) {
       const fileUrl = getDataUri(file);
       const cloudResponce = await Cloudinary.uploader.upload(fileUrl.content);
-      updateData.file = cloudResponce.secure_url;
+      updateData.logo = cloudResponce.secure_url;
     }
 
     const company = await Company.findByIdAndUpdate(req.params.id, updateData, {
@@ -87,12 +87,12 @@ exports.updateCompany = async (req, res) => {
     if (!company) {
       return res
         .status(httpStatus.ALREADY_REPORTED)
-        .json({ message: "Company name is required" });
+        .json({ message: "Company name is required", success: false });
     }
 
     res
       .status(httpStatus.OK)
-      .json({ company, message: "Company has been updated" });
+      .json({ company, message: "Company has been updated", success: true });
   } catch (error) {
     console.error(error);
     res

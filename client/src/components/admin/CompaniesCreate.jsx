@@ -18,7 +18,6 @@ const CompaniesCreate = () => {
             const { data } = await axios.post(`${COMPANY_API_END_POINT}/create-company`, { companyName }, {
                 withCredentials: true
             })
-            console.log(data)
             if (data.success) {
                 dispatch(setSingleCompany(data?.company));
                 toast.success(data?.message);
