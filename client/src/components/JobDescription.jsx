@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { setSingleJob } from '@/redux/jobSlice';
+import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from '@/utils/constants';
+import axios from 'axios';
+import { motion } from 'framer-motion';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { useParams } from 'react-router-dom';
-import useGetSingleJob from '@/hooks/usetGetSingleJob';
-import axios from 'axios';
-import { setSingleJob } from '@/redux/jobSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from '@/utils/constants';
-import moment from 'moment';
-import { toast } from 'react-toastify';
-import { motion } from 'framer-motion';
 
 const JobDescription = () => {
     const { id } = useParams();

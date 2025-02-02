@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import { COMPANY_API_END_POINT } from '@/utils/constants'
+import { Label } from '@radix-ui/react-label'
+import axios from 'axios'
+import { ArrowLeft, Loader2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Navbar from '../shared/Navbar'
 import { Button } from '../ui/button'
-import { ArrowLeft, Loader2 } from 'lucide-react'
-import { Label } from '@radix-ui/react-label'
 import { Input } from '../ui/input'
-import axios from 'axios'
-import { COMPANY_API_END_POINT } from '@/utils/constants'
-import { toast } from 'react-toastify'
-import { useNavigate, useParams } from 'react-router-dom'
 
 const CompanySetup = () => {
   const [input, setInput] = useState({
@@ -17,8 +18,20 @@ const CompanySetup = () => {
     location: "",
     file: null
   })
+
   const [loading, setLoading] = useState(false)
   const { id } = useParams();
+  const { singleCompany } = useSelector(state => state.companySlice)
+  console.log(singleCompany)
+  useEffect(() => {
+    setInput({
+      name: singleCompany?.name || "",
+      description: singleCompany?.description || "",
+      website: singleCompany?.website || "",
+      location: singleCompany?.location || "",
+      file: singleCompany?.logo || "",
+    })
+  }, [singleCompany])
   const navigate = useNavigate();
   const changeHandler = (e) => {
     setInput({ ...input, [e?.target?.name]: e?.target?.value });

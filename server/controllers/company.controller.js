@@ -56,14 +56,14 @@ exports.getCompanyById = async (req, res) => {
     if (!company) {
       return res
         .status(httpStatus.ALREADY_REPORTED)
-        .json({ message: "Company not found" });
+        .json({ message: "Company not found", success: false });
     }
-    return res.status(httpStatus.OK).json({ company });
+    return res.status(httpStatus.OK).json({ company, success: true });
   } catch (error) {
     console.error(error);
     res
       .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Server error" });
+      .json({ message: "Server error", success: false });
   }
 };
 
