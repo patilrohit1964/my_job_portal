@@ -1,6 +1,7 @@
 const Company = require("../models/company.model");
+const getDataUri = require("../utils/dataUri");
 const httpStatus = require("http-status").status;
-
+const Cloudinary = require("../utils/cloudinary");
 exports.registerCompany = async (req, res) => {
   try {
     const { companyName } = req.body;
@@ -70,9 +71,14 @@ exports.updateCompany = async (req, res) => {
   try {
     const { name, description, website, location } = req.body;
     const file = req.file;
+    let updateData = { name, description, website, location };
 
     // cloudinary
-    const updateData = { name, description, website, location };
+    if (file) {
+      const fileUrl = getDataUri(file);
+      const cloudResponce = await Cloudinary.uploader.upload(fileUrl.content);
+      updateData.file = cloudResponce.secure_url;
+    }
 
     const company = await Company.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
