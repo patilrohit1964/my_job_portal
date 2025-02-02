@@ -12,7 +12,7 @@ const useGetAllCompanies = () => {
                 const { data } = await axios.get(`${COMPANY_API_END_POINT}/get-company`, {
                     withCredentials: true
                 });
-                if (data.status) {
+                if (data.success) {
                     dispatch(setAllCompanies(data?.company));
                 }
             }

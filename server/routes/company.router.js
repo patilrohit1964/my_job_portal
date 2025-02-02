@@ -17,3 +17,4 @@ router
   .route("/update-company/:id")
   .put(isAuthenticated, upload.single("file"), updateCompany);
 module.exports = router;
+   

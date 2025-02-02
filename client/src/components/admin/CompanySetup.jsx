@@ -1,6 +1,7 @@
 import { COMPANY_API_END_POINT } from '@/utils/constants'
 import { Label } from '@radix-ui/react-label'
 import axios from 'axios'
+import { motion } from "framer-motion"
 import { ArrowLeft, Loader2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -9,7 +10,6 @@ import { toast } from 'react-toastify'
 import Navbar from '../shared/Navbar'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
-
 const CompanySetup = () => {
   const [input, setInput] = useState({
     name: "",
@@ -18,11 +18,9 @@ const CompanySetup = () => {
     location: "",
     file: null
   })
-
   const [loading, setLoading] = useState(false)
   const { id } = useParams();
-  const { singleCompany } = useSelector(state => state.companySlice)
-  console.log(singleCompany)
+  const { singleCompany } = useSelector(state => state?.company)
   useEffect(() => {
     setInput({
       name: singleCompany?.name || "",
@@ -71,42 +69,88 @@ const CompanySetup = () => {
   return (
     <div>
       <Navbar />
-      <div className='max-w-xl mx-auto my-10'>
-        <div className='flex items-center gap-5 p-8'>
-          <Button variant="outline" onClick={() => navigate("/admin/companies")} className="flex items-center gap-2 text-gray-500 font-semibold">
-            <ArrowLeft />
-            <span>Back</span>
-          </Button>
-          <h1 className='font-bold text-xl'>Company Setup</h1>
-        </div>
-        <form action="" onSubmit={submitHandler}>
-          <div className='grid grid-cols-2 gap-4'>
-            <div>
-              <Label>Company Name</Label>
-              <Input type="text" name="name" value={input.name} onChange={changeHandler} className="focus:border-blue-400" />
-            </div>
-            <div>
-              <Label>Company Description</Label>
-              <Input type="text" name="description" value={input.description} onChange={changeHandler} className="focus:border-blue-400" />
-            </div>
-            <div>
-              <Label>Company Website</Label>
-              <Input type="text" name="website" value={input.website} onChange={changeHandler} className="focus:border-blue-400" />
-            </div>
-            <div>
-              <Label>Company Location</Label>
-              <Input type="text" name="location" value={input.location} onChange={changeHandler} className="focus:border-blue-400" />
-            </div>
-            <div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className='max-w-xl mx-auto my-10 px-4 sm:px-6'
+      >
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+          className='flex flex-col sm:flex-row items-center gap-5 p-4 sm:p-8'
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button
+              variant="outline"
+              onClick={() => navigate("/admin/companies")}
+              className="flex items-center gap-2 text-gray-500 font-semibold"
+            >
+              <ArrowLeft />
+              <span>Back</span>
+            </Button>
+          </motion.button>
+          <h1 className='font-bold text-xl text-center sm:text-left'>Company Setup</h1>
+        </motion.div>
+
+        <motion.form
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+          onSubmit={submitHandler}
+        >
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+            {["name", "description", "website", "location"].map((field, index) => (
+              <motion.div
+                key={field}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <Label>Company {field.charAt(0).toUpperCase() + field.slice(1)}</Label>
+                <Input
+                  type="text"
+                  name={field}
+                  value={input[field]}
+                  onChange={changeHandler}
+                  className="focus:border-blue-400 transition-all duration-300"
+                />
+              </motion.div>
+            ))}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.4 }}
+            >
               <Label>Company Logo</Label>
-              <Input type="file" accept="image/*" onChange={changeFileHandler} className="focus:border-blue-400" />
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={changeFileHandler}
+                className="focus:border-blue-400 transition-all duration-300"
+              />
+            </motion.div>
+            <div>
+              {
+                <img src={singleCompany?.logo} alt="Company Logo" />
+              }
             </div>
           </div>
-          <Button type="submit" className="w-full mt-8">
-            {loading ? <Loader2 className='w-4 h-4 animate-spin' /> : "Update Company"}
-          </Button>
-        </form>
-      </div>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Button type="submit" className="w-full mt-8">
+              {loading ? <Loader2 className='w-4 h-4 animate-spin' /> : "Update Company"}
+            </Button>
+          </motion.button>
+        </motion.form>
+      </motion.div>
     </div>
   )
 }
