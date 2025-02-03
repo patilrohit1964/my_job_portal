@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import Navbar from '../shared/Navbar'
-import CompaniesTable from './CompaniesTable'
-import { useNavigate } from 'react-router-dom'
-import useGetAllCompanies from '@/hooks/useGetAllCompanies'
-import { useDispatch } from 'react-redux'
+import useGetAllAdminJobs from '@/hooks/useGetAllAdminJobs'
 import { setSearchCompanyByText } from '@/redux/companySlice'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import Navbar from '../shared/Navbar'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
 import AdminJobsTable from './AdminJobsTable'
+import { setSearchJobByText } from '@/redux/jobSlice'
 
 const AdminJobs = () => {
-  useGetAllCompanies();
+  useGetAllAdminJobs();
   const [input, setInput] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setSearchCompanyByText(input));
+    dispatch(setSearchJobByText(input));
   }, [input])
   return (
     <div>

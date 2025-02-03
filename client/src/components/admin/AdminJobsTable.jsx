@@ -8,23 +8,24 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 
 const AdminJobsTable = () => {
-    const { companies, searchCompanyByText } = useSelector(state => state.company);
-    const [filterdCompany, setFilterCompany] = useState(companies)
+    const { companies } = useSelector(state => state.company);
+    const { allAdminJobs, searchJobByText } = useSelector(state => state.jobSlice);
+    const [filterJobs, setFilterJobs] = useState(companies)
     const navigate = useNavigate();
     useEffect(() => {
-        const filteredCompany = companies?.length > 0 && companies?.filter((company) => {
-            if (!searchCompanyByText) {
+        const filterdJobs = allAdminJobs?.length > 0 && companies?.filter((job) => {
+            if (!searchJobByText) {
                 return true;
             }
-            return company?.name?.toLowerCase().includes(searchCompanyByText?.toLowerCase());
+            return job?.name?.toLowerCase().includes(searchJobByText?.toLowerCase());
         });
-        setFilterCompany(filteredCompany);
-    }, [companies, searchCompanyByText])
-
+        setFilterJobs(filterdJobs);
+    }, [companies, searchJobByText])
+    console.log(filterJobs)
     return (
         <div>
             {
-                filterdCompany && filterdCompany.length > 0 ?
+                filterJobs && filterJobs.length > 0 ?
                     <Table>
                         <TableCaption>A List Of your recent posted jobs Companies</TableCaption>
                         <TableHeader>
@@ -37,7 +38,7 @@ const AdminJobsTable = () => {
                         </TableHeader>
                         <TableBody>
                             {
-                                filterdCompany?.map((company) => (
+                                filterJobs?.map((company) => (
                                     <TableRow key={company?._id}>
                                         <TableCell>{company?.name}</TableCell>
                                         <TableCell>{moment(company?.createAt).format("DD MMM, YYYY")}</TableCell>
@@ -60,7 +61,7 @@ const AdminJobsTable = () => {
 
                         </TableBody>
                     </Table>
-                    : <h1 className='h-96 flex items-center justify-center text-2xl text-gray-500'>You Don't Yet Have Any Registerd Company</h1>
+                    : <h1 className='h-96 flex items-center justify-center text-2xl text-gray-500'>You Don't Yet Have Any Post Job</h1>
             }
         </div>
     )
