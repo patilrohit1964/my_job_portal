@@ -1,17 +1,16 @@
 import { Edit2, MoreHorizontal } from 'lucide-react'
 import moment from 'moment'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
-import { useEffect, useState } from 'react'
 
 const CompaniesTable = () => {
     const { companies, searchCompanyByText } = useSelector(state => state.company);
-    const [filterCompany, setFilterCompany] = useState(companies)
+    const [filterdCompany, setFilterCompany] = useState(companies)
     const navigate = useNavigate();
-
     useEffect(() => {
         const filteredCompany = companies?.length > 0 && companies?.filter((company) => {
             if (!searchCompanyByText) {
@@ -25,7 +24,7 @@ const CompaniesTable = () => {
     return (
         <div>
             {
-                companies && companies.length > 0 ?
+                filterdCompany && filterdCompany.length > 0 ?
                     <Table>
                         <TableCaption>A List Of your recent registerd Companies</TableCaption>
                         <TableHeader>
@@ -38,7 +37,7 @@ const CompaniesTable = () => {
                         </TableHeader>
                         <TableBody>
                             {
-                                companies?.map((company) => (
+                                filterdCompany?.map((company) => (
                                     <TableRow key={company?._id}>
                                         <TableCell>
                                             <Avatar className="border border-gray-300 rounded-full p-1">

@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 import Navbar from '../shared/Navbar'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
+import useGetCompanyById from '@/hooks/useGetCompanyById'
 const CompanySetup = () => {
   const [input, setInput] = useState({
     name: "",
@@ -20,6 +21,7 @@ const CompanySetup = () => {
   })
   const [loading, setLoading] = useState(false)
   const { id } = useParams();
+  useGetCompanyById(id);
   const { singleCompany } = useSelector(state => state?.company)
   useEffect(() => {
     setInput({
@@ -134,13 +136,13 @@ const CompanySetup = () => {
                 className="focus:border-blue-400 transition-all duration-300"
               />
             </motion.div>
-            <div>
+            {/* <div>
               {input.file ? (
                 <img src={URL.createObjectURL(input.file)} alt="Company Logo" className="w-32 h-32 object-cover rounded-md" />
               ) : (
                 singleCompany?.logo && <img src={singleCompany.logo} alt="Company Logo" className="w-32 h-32 object-cover rounded-md" />
               )}
-            </div>
+            </div> */}
 
           </div>
           <motion.button
