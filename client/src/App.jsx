@@ -1,15 +1,16 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import "./App.css"
+import AdminJobs from './components/admin/AdminJobs'
+import Companies from './components/admin/Companies'
+import CompaniesCreate from './components/admin/CompaniesCreate'
+import CompanySetup from './components/admin/CompanySetup'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import Browse from './components/Browse'
 import Home from './components/Home'
+import JobDescription from './components/JobDescription'
 import Jobs from './components/Jobs'
 import Profile from './components/Profile'
-import JobDescription from './components/JobDescription'
-import Companies from './components/admin/Companies'
-import CompaniesCreate from './components/admin/CompaniesCreate'
-import CompanySetup from './components/admin/CompanySetup'
 
 
 
@@ -55,6 +56,10 @@ const appRoutes = createBrowserRouter([
   {
     path: "/admin/companies/:id",
     element: <CompanySetup />
+  },
+  {
+    path: "/admin/jobs",
+    element: <AdminJobs />
   }
 ])
 const App = () => {
