@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
+import { Edit2, MoreHorizontal } from 'lucide-react'
+import moment from 'moment'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { Edit2, MoreHorizontal } from 'lucide-react'
-import axios from 'axios'
-import { COMPANY_API_END_POINT } from '@/utils/constants'
-import { toast } from 'react-toastify'
-import moment from 'moment'
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
+import { useEffect, useState } from 'react'
 
 const CompaniesTable = () => {
-
-    const { companies } = useSelector(state => state.company);
+    const { companies, searchCompanyByText } = useSelector(state => state.company);
+    const [filterCompany, setFilterCompany] = useState(companies)
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const filteredCompany = companies?.length > 0 && companies?.filter((company) => {
+            if (!searchCompanyByText) {
+                return true;
+            }
+            return company?.name?.toLowerCase().includes(searchCompanyByText?.toLowerCase());
+        });
+        setFilterCompany(filteredCompany);
+    }, [companies, searchCompanyByText])
 
     return (
         <div>
