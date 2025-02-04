@@ -1,4 +1,4 @@
-const httpStatus = require("http-status");
+const httpStatus = require("http-status").status;
 
 const Application = require("../models/application.model");
 const Job = require("../models/job.model");

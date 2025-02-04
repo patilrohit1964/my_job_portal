@@ -1,6 +1,6 @@
 const Company = require("../models/company.model");
 const getDataUri = require("../utils/dataUri");
-const httpStatus = require("http-status");
+const httpStatus = require("http-status").status;
 const Cloudinary = require("../utils/cloudinary");
 exports.registerCompany = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-const httpStatus = require("http-status");
+const httpStatus = require("http-status").status;
 const Job = require("../models/job.model");
 exports.postJob = async (req, res) => {
   try {

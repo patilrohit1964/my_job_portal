@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const httpStatus = require("http-status");
+const httpStatus = require("http-status").status;
 
 const isAuthenticated = async (req, res, next) => {
   try {

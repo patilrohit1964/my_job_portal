@@ -1,6 +1,6 @@
 const validator = require("validator");
 const User = require("../models/userSchema.model");
-const httpStatus = require("http-status");
+const httpStatus = require("http-status").status;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const getDataUri = require("../utils/dataUri");
