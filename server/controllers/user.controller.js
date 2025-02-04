@@ -96,7 +96,7 @@ exports.login = async (req, res) => {
     const tokenData = {
       userId: user._id,
     };
-    
+
     const token = jwt.sign(tokenData, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
@@ -116,9 +116,13 @@ exports.login = async (req, res) => {
         maxAge: 24 * 60 * 60 * 1000, // 1 day
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict"
+        sameSite: "strict",
       })
-      .json({ message: `Welcome back ${user.fullname}`, success: true, user: userResponse });
+      .json({
+        message: `Welcome back ${user.fullname}`,
+        success: true,
+        user: userResponse,
+      });
   } catch (error) {
     console.error(error);
     return res
@@ -134,7 +138,7 @@ exports.logout = (req, res) => {
       .clearCookie("token", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict"
+        sameSite: "strict",
       })
       .json({ message: "Logged out successfully", success: true });
   } catch (error) {
@@ -170,12 +174,14 @@ exports.updateProfile = async (req, res) => {
     user.email = email || user.email;
     user.phoneNumber = phoneNumber || user.phoneNumber;
     user.profile.bio = bio || user.profile.bio;
-    user.profile.skills = skills ? skills.split(",").map(skill => skill.trim()) : user.profile.skills;
+    user.profile.skills = skills
+      ? skills.split(",").map((skill) => skill.trim())
+      : user.profile.skills;
 
     if (req.file) {
       const fileUri = getDataUri(req.file);
       const cloudResponse = await Cloudinary.uploader.upload(fileUri.content, {
-        resource_type: "auto"
+        resource_type: "auto",
       });
       if (cloudResponse) {
         user.profile.resume = cloudResponse.secure_url;
