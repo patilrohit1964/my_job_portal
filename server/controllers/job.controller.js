@@ -47,7 +47,9 @@ exports.postJob = async (req, res) => {
       .json({ message: "Job posted successfully", job, success: true });
   } catch (error) {
     console.error(error);
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: "Server error", success: false });
+    res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Server error", success: false });
   }
 };
 

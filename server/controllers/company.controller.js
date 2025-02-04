@@ -1,14 +1,14 @@
 const Company = require("../models/company.model");
 const getDataUri = require("../utils/dataUri");
-const httpStatus = require("http-status").status;
+const httpStatus = require("http-status");
 const Cloudinary = require("../utils/cloudinary");
 exports.registerCompany = async (req, res) => {
   try {
     const { companyName } = req.body;
     if (!companyName) {
-      return res.status(400).json({
+      return res.status(httpStatus.BAD_REQUEST).json({
         message: "Company name is required",
-        status: false,
+        success: false,
       });
     }
     let company = await Company.findOne({ name: companyName });
@@ -29,7 +29,9 @@ exports.registerCompany = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error", success: false });
+    res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Server error", success: false });
   }
 };
 
@@ -55,7 +57,7 @@ exports.getCompanyById = async (req, res) => {
     const company = await Company.findById(req.params.id);
     if (!company) {
       return res
-        .status(httpStatus.ALREADY_REPORTED)
+        .status(httpStatus.NOT_FOUND)
         .json({ message: "Company not found", success: false });
     }
     return res.status(httpStatus.OK).json({ company, success: true });
@@ -86,7 +88,7 @@ exports.updateCompany = async (req, res) => {
 
     if (!company) {
       return res
-        .status(httpStatus.ALREADY_REPORTED)
+        .status(httpStatus.NOT_FOUND)
         .json({ message: "Company name is required", success: false });
     }
 
