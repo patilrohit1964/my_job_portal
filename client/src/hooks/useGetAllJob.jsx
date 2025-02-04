@@ -12,7 +12,7 @@ const useGetAllJob = () => {
                 const { data } = await axios.get(`${JOB_API_END_POINT}/all/jobs`, {
                     withCredentials: true
                 });
-                if (data.status) {
+                if (data.success) {
                     dispatch(setAllJobs(data.jobs));
                 }
             }

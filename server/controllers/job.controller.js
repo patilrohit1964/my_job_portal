@@ -1,4 +1,4 @@
-const httpsStatus = require("http-status").status;
+const httpStatus = require("http-status");
 const Job = require("../models/job.model");
 exports.postJob = async (req, res) => {
   try {
@@ -25,8 +25,8 @@ exports.postJob = async (req, res) => {
       !position
     ) {
       return res
-        .status(httpsStatus.BAD_REQUEST)
-        .json({ message: "All fields are required", status: false });
+        .status(httpStatus.BAD_REQUEST)
+        .json({ message: "All fields are required", success: false });
     }
 
     const job = await Job.create({
@@ -43,11 +43,11 @@ exports.postJob = async (req, res) => {
     });
 
     res
-      .status(httpsStatus.CREATED)
-      .json({ message: "Job posted successfully", job, status: true });
+      .status(httpStatus.CREATED)
+      .json({ message: "Job posted successfully", job, success: true });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error", status: false });
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: "Server error", success: false });
   }
 };
 
@@ -68,19 +68,19 @@ exports.getAllJobs = async (req, res) => {
 
     if (!jobs) {
       return res
-        .status(httpsStatus.NOT_FOUND)
-        .json({ message: "No jobs found", status: false });
+        .status(httpStatus.NOT_FOUND)
+        .json({ message: "No jobs found", success: false });
     }
-    return res.status(httpsStatus.OK).json({
+    return res.status(httpStatus.OK).json({
       jobs,
       message: "Jobs fetched successfully",
-      status: true,
+      success: true,
     });
   } catch (error) {
     console.error(error);
     return res
-      .status(httpsStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Server error", status: false });
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Server error", success: false });
   }
 };
 
@@ -91,19 +91,19 @@ exports.getJobById = async (req, res) => {
     });
     if (!job) {
       return res
-        .status(httpsStatus.NOT_FOUND)
-        .json({ message: "Job not found", status: false });
+        .status(httpStatus.NOT_FOUND)
+        .json({ message: "Job not found", success: false });
     }
-    return res.status(httpsStatus.OK).json({
+    return res.status(httpStatus.OK).json({
       message: "Job fetched successfully",
       job,
-      status: true,
+      success: true,
     });
   } catch (error) {
     console.error(error);
     return res
-      .status(httpsStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Server error", status: false });
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Server error", success: false });
   }
 };
 
@@ -111,16 +111,17 @@ exports.getJobById = async (req, res) => {
 exports.getAdminJobs = async (req, res) => {
   try {
     const adminId = req.id;
-    const jobs = await Job.find({ created_by: adminId }).populate({
-      path: "company",
-      createdAt: -1,
-    });
-    if (!jobs) {
+    const jobs = await Job.find({ created_by: adminId })
+      .populate("company")
+      .sort({ createdAt: -1 });
+
+    if (!jobs || jobs.length === 0) {
       return res
-        .status(httpsStatus.NOT_FOUND)
-        .json({ message: "No jobs found", status: false });
+        .status(httpStatus.NOT_FOUND)
+        .json({ message: "No jobs found", success: false });
     }
-    return res.status(httpsStatus.OK).json({
+
+    return res.status(httpStatus.OK).json({
       message: "Jobs fetched successfully",
       jobs,
       success: true,
@@ -128,7 +129,7 @@ exports.getAdminJobs = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res
-      .status(httpsStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Server error", status: false });
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Server error", success: false });
   }
 };
