@@ -36,7 +36,7 @@ exports.postJob = async (req, res) => {
       salary: Number(salary),
       location,
       jobType,
-      experienceLevel: experience,
+      experienceLevel: Number(experience),
       position,
       company: companyId,
       created_by: req.id,

@@ -3,25 +3,38 @@ import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import Navbar from '../shared/Navbar'
 import { Button } from '../ui/button'
+import axios from 'axios'
+import { JOB_API_END_POINT } from '@/utils/constants'
+import { toast } from 'react-toastify'
 
 const PostJob = () => {
     const [input, setInput] = useState({
         title: "",
         description: "",
         requirements: "",
-        salary: "",
+        salary: 0,
         location: "",
         jobType: "",
-        experience: "",
+        experience: 0,
         position: 0,
         companyId: ""
     })
     const handleInputChange = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value })
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(input)
+        try {
+            const { data } = await axios.post(`${JOB_API_END_POINT}/create-job`, input, {
+                withCredentials: true
+            })
+            if (data?.success) {
+                toast.success(data?.message || "Job Posted Successfully")
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error(error)
+        }
     }
     return (
         <>
