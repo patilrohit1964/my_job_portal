@@ -16,12 +16,13 @@ const PostJob = () => {
         location: "",
         jobType: "",
         experience: 0,
-        position: 0,
+        position: "",
         companyId: ""
     })
     const handleInputChange = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value })
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -114,7 +115,7 @@ const PostJob = () => {
                     <div>
                         <Label>Position</Label>
                         <Input
-                            type="number"
+                            type="text"
                             name="position"
                             value={input.position}
                             onChange={handleInputChange}
