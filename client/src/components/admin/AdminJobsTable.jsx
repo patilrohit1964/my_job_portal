@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 
+//ensure get admin jobs correctly that admin added their jobs
 const AdminJobsTable = () => {
     const { companies } = useSelector(state => state.company);
     const { allAdminJobs, searchJobByText } = useSelector(state => state.jobSlice);

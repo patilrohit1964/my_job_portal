@@ -11,6 +11,7 @@ import Home from './components/Home'
 import JobDescription from './components/JobDescription'
 import Jobs from './components/Jobs'
 import Profile from './components/Profile'
+import PostJob from './components/admin/PostJob'
 
 
 
@@ -60,6 +61,10 @@ const appRoutes = createBrowserRouter([
   {
     path: "/admin/jobs",
     element: <AdminJobs />
+  },
+  {
+    path: "/admin/jobs/post",
+    element: <PostJob />
   }
 ])
 const App = () => {
