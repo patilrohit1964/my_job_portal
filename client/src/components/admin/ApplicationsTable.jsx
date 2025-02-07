@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableBody, TableCaption, TableHeader, TableRow } from '../ui/table'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { MoreHorizontal } from 'lucide-react'
 
@@ -10,29 +10,33 @@ const ApplicationsTable = () => {
             <Table>
                 <TableCaption>A List of your applications</TableCaption>
                 <TableHeader>
-                    <TableRow>Fullname</TableRow>
-                    <TableRow>Email</TableRow>
-                    <TableRow>Contact</TableRow>
-                    <TableRow>Resume</TableRow>
-                    <TableRow>Date</TableRow>
-                    <TableRow classname="text-right">Action</TableRow>
+                    <TableRow>
+                        <TableHead>Fullname</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Contact</TableHead>
+                        <TableHead>Resume</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead classname="text-right">Action</TableHead>
+                    </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow>Fullname</TableRow>
-                    <TableRow>Email</TableRow>
-                    <TableRow>Contact</TableRow>
-                    <TableRow>Resume</TableRow>
-                    <TableRow>Date</TableRow>
-                    <TableRow classname="text-right">
-                        <Popover>
-                            <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
-                            <PopoverContent classname="w-32"></PopoverContent>
-                            {short.map((status, index) => (
-                                <div key={index} className='flex w-fit my-2 cursor-pointer items-center'>
-                                    <span></span>
-                                </div>
-                            ))}
-                        </Popover>
+                    <TableRow>
+                        <TableCell>Fullname</TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>Contact</TableCell>
+                        <TableCell>Resume</TableCell>
+                        <TableCell>Date</TableCell>
+                        <TableCell classname="float-right cursor-pointer">
+                            <Popover>
+                                <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
+                                <PopoverContent classname="w-32"></PopoverContent>
+                                {short.map((status, index) => (
+                                    <div key={index} className='flex w-fit my-2 cursor-pointer items-center'>
+                                        <span>{status}</span>
+                                    </div>
+                                ))}
+                            </Popover>
+                        </TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
