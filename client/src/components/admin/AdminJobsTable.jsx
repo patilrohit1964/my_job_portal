@@ -1,4 +1,4 @@
-import { Edit2, MoreHorizontal } from 'lucide-react'
+import { Edit2, Eye, MoreHorizontal } from 'lucide-react'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -21,7 +21,7 @@ const AdminJobsTable = () => {
         });
         setFilterJobs(filterdJobs);
     }, [companies, searchJobByText])
-    console.log(filterJobs)
+
     return (
         <div>
             {
@@ -51,6 +51,10 @@ const AdminJobsTable = () => {
                                                     <div className='flex items-center gap-2 w-fit cursor-pointer'>
                                                         <Edit2 />
                                                         <span onClick={() => navigate(`/admin/companies/${company?._id}`)}>Edit</span>
+                                                    </div>
+                                                    <div onClick={() => navigate(`/admin/jobs/${company?._id}/applicants`)} className='flex items-center mt-5 gap-2 w-fit cursor-pointer'>
+                                                        <Eye />
+                                                        <span>Applicants</span>
                                                     </div>
                                                 </PopoverContent>
                                             </Popover>
