@@ -9,6 +9,7 @@ import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import { useNavigate } from 'react-router-dom'
 
 const PostJob = () => {
     const [loading, setLoading] = useState(false)
@@ -25,13 +26,14 @@ const PostJob = () => {
     })
 
     const { companies } = useSelector(state => state.company)
-
+    const navigate = useNavigate();
     const handleInputChange = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value })
     }
 
     const selectChangeHandler = (value) => {
-        setInput(prev => ({ ...prev, companyId: value }))
+        const selectCompany = companies?.find((company) => company?._id.toLowerCase() === value);
+        setInput(prev => ({ ...prev, companyId: selectCompany._id }))
     }
 
     const handleSubmit = async (e) => {
@@ -42,7 +44,8 @@ const PostJob = () => {
                 withCredentials: true
             })
             if (data?.success) {
-                toast.success(data?.message || "Job Posted Successfully")
+                toast.success(data?.message || "Job Posted Successfully");
+                navigate("/admin/jobs")
                 setInput({
                     title: "",
                     description: "",
