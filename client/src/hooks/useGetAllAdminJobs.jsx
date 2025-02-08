@@ -12,7 +12,6 @@ const useGetAllAdminJobs = () => {
                 const { data } = await axios.get(`${JOB_API_END_POINT}/getAdmin/jobs`, {
                     withCredentials: true
                 });
-                console.log(data, "from custom hook");
                 if (data?.success) {
                     dispatch(setAllAdminJobs(data?.jobs));
                 }

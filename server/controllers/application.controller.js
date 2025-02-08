@@ -94,8 +94,6 @@ exports.getApplications = async (req, res) => {
       options: { sort: { createdAt: -1 } },
       populate: { path: "applier" },
     });
-    console.log("heloo");
-    console.log(job, "hello");
     if (!job) {
       return res.status(httpStatus.NOT_FOUND).json({
         message: "Job not found",

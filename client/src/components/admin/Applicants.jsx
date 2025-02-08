@@ -5,14 +5,14 @@ import axios from 'axios'
 import { APPLICATION_API_END_POINT } from '@/utils/constants'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setAllApplicants } from '@/redux/applicationSlice'
 
 const Applicants = () => {
 
     const { id } = useParams();
     const dispatch = useDispatch();
-
+    const { applications } = useSelector(state => state.applicationSlice);
     useEffect(() => {
         const fetchApplicants = async () => {
             try {
@@ -34,7 +34,7 @@ const Applicants = () => {
         <div>
             <Navbar />
             <div className='max-w-7xl mx-auto'>
-                <h1 className='font-bold text-xl my-5'>Applications 6</h1>
+                <h1 className='font-bold text-xl my-5'>Applications {applications?.applications?.length}</h1>
                 <ApplicationsTable />
             </div>
         </div>
