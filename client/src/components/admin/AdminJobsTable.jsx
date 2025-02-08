@@ -8,20 +8,21 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 
 //ensure get admin jobs correctly that admin added their jobs
 const AdminJobsTable = () => {
-    const { companies } = useSelector(state => state.company);
-    const { allAdminJobs, searchJobByText } = useSelector(state => state.jobSlice);
-    const [filterJobs, setFilterJobs] = useState(companies)
+    const { allAdminJobs, searchJobByText } = useSelector(store => store?.jobSlice);
+
+    const [filterJobs, setFilterJobs] = useState(allAdminJobs);
     const navigate = useNavigate();
     useEffect(() => {
-        const filterdJobs = allAdminJobs?.length > 0 && companies?.filter((job) => {
+        console.log('called');
+        const filteredJobs = allAdminJobs.filter((job) => {
             if (!searchJobByText) {
                 return true;
-            }
-            return job?.name?.toLowerCase().includes(searchJobByText?.toLowerCase());
-        });
-        setFilterJobs(filterdJobs);
-    }, [companies, searchJobByText])
+            };
+            return job?.title?.toLowerCase().includes(searchJobByText.toLowerCase()) || job?.company?.name.toLowerCase().includes(searchJobByText.toLowerCase());
 
+        });
+        setFilterJobs(filteredJobs);
+    }, [allAdminJobs, searchJobByText])
     return (
         <div>
             {
@@ -38,31 +39,30 @@ const AdminJobsTable = () => {
                         </TableHeader>
                         <TableBody>
                             {
-                                filterJobs?.map((company) => (
-                                    <TableRow key={company?._id}>
-                                        <TableCell>{company?.name}</TableCell>
-                                        <TableCell>{moment(company?.createAt).format("DD MMM, YYYY")}</TableCell>
+                                filterJobs?.map((job) => (
+                                    <tr>
+                                        <TableCell>{job?.company?.name}</TableCell>
+                                        <TableCell>{job?.title}</TableCell>
+                                        <TableCell>{job?.createdAt.split("T")[0]}</TableCell>
                                         <TableCell className="text-right cursor-pointer">
                                             <Popover>
-                                                <PopoverTrigger>
-                                                    <MoreHorizontal />
-                                                </PopoverTrigger>
+                                                <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
                                                 <PopoverContent className="w-32">
-                                                    <div className='flex items-center gap-2 w-fit cursor-pointer'>
-                                                        <Edit2 />
-                                                        <span onClick={() => navigate(`/admin/companies/${company?._id}`)}>Edit</span>
+                                                    <div onClick={() => navigate(`/admin/companies/${job._id}`)} className='flex items-center gap-2 w-fit cursor-pointer'>
+                                                        <Edit2 className='w-4' />
+                                                        <span>Edit</span>
                                                     </div>
-                                                    <div onClick={() => navigate(`/admin/jobs/${company?._id}/applicants`)} className='flex items-center mt-5 gap-2 w-fit cursor-pointer'>
-                                                        <Eye />
+                                                    <div onClick={() => navigate(`/admin/jobs/${job._id}/applicants`)} className='flex items-center w-fit gap-2 cursor-pointer mt-2'>
+                                                        <Eye className='w-4' />
                                                         <span>Applicants</span>
                                                     </div>
                                                 </PopoverContent>
                                             </Popover>
                                         </TableCell>
-                                    </TableRow>
+                                    </tr>
+
                                 ))
                             }
-
                         </TableBody>
                     </Table>
                     : <h1 className='h-96 flex items-center justify-center text-2xl text-gray-500'>You Don't Yet Have Any Post Job</h1>

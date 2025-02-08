@@ -116,7 +116,6 @@ exports.getAdminJobs = async (req, res) => {
     const jobs = await Job.find({ created_by: adminId })
       .populate("company")
       .sort({ createdAt: -1 });
-
     if (!jobs || jobs.length === 0) {
       return res
         .status(httpStatus.NOT_FOUND)

@@ -25,7 +25,7 @@ const Applicants = () => {
                 }
             } catch (error) {
                 toast.error(error.message || "some error");
-                console.error(error?.message);
+                console.error(error);
             }
         }
         fetchApplicants();
