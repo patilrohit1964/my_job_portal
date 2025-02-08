@@ -16,7 +16,7 @@ const ApplicationsTable = () => {
                         <TableHead>Contact</TableHead>
                         <TableHead>Resume</TableHead>
                         <TableHead>Date</TableHead>
-                        <TableHead classname="text-right">Action</TableHead>
+                        <TableHead className="text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -26,10 +26,10 @@ const ApplicationsTable = () => {
                         <TableCell>Contact</TableCell>
                         <TableCell>Resume</TableCell>
                         <TableCell>Date</TableCell>
-                        <TableCell classname="float-right cursor-pointer">
+                        <TableCell className="float-right cursor-pointer">
                             <Popover>
                                 <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
-                                <PopoverContent classname="w-32"></PopoverContent>
+                                <PopoverContent className="w-32"></PopoverContent>
                                 {short.map((status, index) => (
                                     <div key={index} className='flex w-fit my-2 cursor-pointer items-center'>
                                         <span>{status}</span>
