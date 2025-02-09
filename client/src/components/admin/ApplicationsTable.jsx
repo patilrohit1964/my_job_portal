@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 
-const short = ["accepted", "rejected"];
+const short = ["Accepted", "Rejected"];
 const ApplicationsTable = () => {
     const { applications } = useSelector(state => state?.applicationSlice);
     const statusHandler = async (status, id) => {
@@ -15,7 +15,7 @@ const ApplicationsTable = () => {
             const { data } = await axios.put(`${APPLICATION_API_END_POINT}/status/${id}/update`, { status }, {
                 withCredentials: true
             })
-            if (data?.status) {
+            if (data?.success) {
                 toast.success(data?.message);
             }
         } catch (error) {
