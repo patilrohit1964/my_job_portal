@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux'
 import FilterCard from './FilterCard'
 import Job from './Job'
 import Navbar from './shared/Navbar'
+import { motion } from 'framer-motion'
 
 const Jobs = () => {
   const { allJobs, searchedQuery } = useSelector(state => state.jobSlice);
   const [filterJobs, setFilterJobs] = useState(allJobs);
-
   useEffect(() => {
     if (searchedQuery) {
       const filteredJobs = allJobs?.filter((job) => {
@@ -33,9 +33,15 @@ const Jobs = () => {
                   <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
                     {
                       allJobs?.map((job, index) => (
-                        <div key={job?._id} className="transform transition duration-500 hover:scale-105 p-4 rounded-lg">
+                        <motion.div
+                          initial={{ opacity: 0, x: 100 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -100 }}
+                          transition={{ duration: 0.3 }}
+                          key={job?._id}
+                          className="transform transition duration-500 hover:scale-105 p-4 rounded-lg">
                           <Job job={job} />
-                        </div>
+                        </motion.div>
                       ))
                     }
                   </div>

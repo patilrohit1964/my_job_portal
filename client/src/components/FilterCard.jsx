@@ -15,7 +15,9 @@ const filterData = [
             "Chennai",
             "Kolkata",
             "Hyderabad",
-            "Udhna"
+            "Udhna",
+            "California Usa",
+            "Usa",
         ]
     },
     {
@@ -49,7 +51,7 @@ const FilterCard = () => {
     }
 
     useEffect(() => {
-        dispatch(setSearchedQuery(selectedValue))
+        dispatch(setSearchedQuery(selectedValue));
     }, [selectedValue])
     return (
         <div className='w-full bg-white p-6 rounded-md shadow-lg'>
@@ -64,7 +66,7 @@ const FilterCard = () => {
                                 data.array.map((item, idx) => {
                                     const radioId = `r-${index}-${idx}`
                                     return (
-                                        <div key={index} className='flex items-center space-x-3 my-2'>
+                                        <div key={idx} className='flex items-center space-x-3 my-2'>
                                             <RadioGroupItem value={item} id={radioId} className="transition duration-200 ease-in-out transform hover:scale-105 hover:text-blue-500"></RadioGroupItem>
                                             <Label className='text-gray-700' htmlFor={radioId}>{item}</Label>
                                         </div>
