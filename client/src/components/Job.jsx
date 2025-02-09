@@ -9,7 +9,6 @@ import moment from 'moment';
 
 const Job = ({ job }) => {
     const navigate = useNavigate();
-    console.log(job)
     return (
         <motion.div
             initial={{ opacity: 0, x: -20 }}
