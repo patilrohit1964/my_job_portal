@@ -8,27 +8,25 @@ const filterData = [
     {
         filterType: "Location",
         array: [
-            "New York",
-            "London",
+            "Surat",
             "Mumbai",
-            "Singapore",
-            "Dubai",
-            "Tokyo",
-            "Sydney",
-            "Toronto",
-            "Berlin",
-            "Paris"
+            "Delhi",
+            "Bangalore",
+            "Chennai",
+            "Kolkata",
+            "Hyderabad",
+            "Udhna"
         ]
     },
     {
         filterType: "Industry",
         array: [
-            "IT",
-            "Finance",
-            "Healthcare",
-            "Education",
-            "Retail",
-            "Government",
+            "Full Stack Developer",
+            "Frontend Developer",
+            "Backend Developer",
+            "Mobile Developer",
+            "Data Scientist",
+            "Product Manager",
         ]
     },
     {
@@ -46,8 +44,8 @@ const filterData = [
 const FilterCard = () => {
     const [selectedValue, setSelectedValue] = useState("");
     const dispatch = useDispatch();
-    const changeHandler = () => {
-        setSelectedValue(e.target.value);
+    const changeHandler = (e) => {
+        setSelectedValue(e);
     }
 
     useEffect(() => {
