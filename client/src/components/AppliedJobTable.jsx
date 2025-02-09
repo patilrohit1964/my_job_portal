@@ -9,29 +9,12 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Badge } from "./ui/badge"
-
-const invoices = [
-    {
-        invoice: "INV001",
-        paymentStatus: "Paid",
-        totalAmount: "$250.00",
-        paymentMethod: "Credit Card",
-    },
-    {
-        invoice: "INV002",
-        paymentStatus: "Pending",
-        totalAmount: "$150.00",
-        paymentMethod: "PayPal",
-    },
-    {
-        invoice: "INV003",
-        paymentStatus: "Unpaid",
-        totalAmount: "$350.00",
-        paymentMethod: "Bank Transfer",
-    },
-]
+import { useSelector } from "react-redux"
+import moment from "moment";
 
 export default function AppliedJobTable() {
+    const { allAppliedJobs } = useSelector(state => state?.jobSlice);
+
     return (
         <Table>
             <TableCaption>A list of your applied jobs.</TableCaption>
@@ -44,19 +27,23 @@ export default function AppliedJobTable() {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {invoices.map((invoice) => (
-                    <TableRow key={invoice.invoice}>
-                        <TableCell className="font-medium">{"18-01-2025"}</TableCell>
-                        <TableCell>{"Frontend"}</TableCell>
-                        <TableCell>{"Tbs"}</TableCell>
-                        <TableCell className="text-right"><Badge>Selected</Badge></TableCell>
+                {allAppliedJobs?.map((applyJob) => (
+                    <TableRow key={applyJob?._id}>
+                        <TableCell className="font-medium">{moment(applyJob).format()}</TableCell>
+                        <TableCell>{applyJob?.job?.position}</TableCell>
+                        <TableCell>{applyJob?.job?.company?.name}</TableCell>
+                        <TableCell className="text-right"><Badge>{applyJob?.status}</Badge></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
             <TableFooter>
                 <TableRow>
                     <TableCell colSpan={3}>Total</TableCell>
-                    <TableCell className="text-right">$2,500.00</TableCell>
+                    <TableCell className="text-right">
+                        {
+                            allAppliedJobs && allAppliedJobs?.length > 0 ? allAppliedJobs?.length : "No jobs were applied"
+                        }
+                    </TableCell>
                 </TableRow>
             </TableFooter>
         </Table>

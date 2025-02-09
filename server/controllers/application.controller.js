@@ -53,7 +53,7 @@ exports.applyJob = async (req, res) => {
 
 exports.getAppliedJobs = async (req, res) => {
   try {
-    const application = await Application.find({ applier: req.id })
+    const applications = await Application.find({ applier: req.id })
       .sort({
         createdAt: -1,
       })
@@ -65,7 +65,7 @@ exports.getAppliedJobs = async (req, res) => {
           options: { sort: { createdAt: -1 } },
         },
       });
-    if (!application) {
+    if (!applications) {
       return res.status(httpStatus.NOT_FOUND).json({
         message: "No applied for the job",
         success: false,
@@ -73,7 +73,7 @@ exports.getAppliedJobs = async (req, res) => {
     }
     return res.status(httpStatus.OK).json({
       message: "Applied Jobs",
-      application,
+      applications,
       success: true,
     });
   } catch (error) {

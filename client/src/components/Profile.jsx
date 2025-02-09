@@ -8,9 +8,11 @@ import AppliedJobTable from './AppliedJobTable'
 import { useState } from 'react'
 import UpdateProfileDialog from './UpdateProfileDialog'
 import { useSelector } from 'react-redux'
+import useGetAllAppliedJobs from '@/hooks/useGetAllAppliedJobs'
 
 
 const Profile = () => {
+    useGetAllAppliedJobs();
     const [open, setOpen] = useState(false);
     const { user } = useSelector(state => state.authSlice)
     return (

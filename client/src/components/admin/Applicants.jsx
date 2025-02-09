@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react'
-import Navbar from '../shared/Navbar'
-import ApplicationsTable from './ApplicationsTable'
-import axios from 'axios'
+import { setAllApplicants } from '@/redux/applicationSlice'
 import { APPLICATION_API_END_POINT } from '@/utils/constants'
+import axios from 'axios'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { useDispatch, useSelector } from 'react-redux'
-import { setAllApplicants } from '@/redux/applicationSlice'
+import Navbar from '../shared/Navbar'
+import ApplicationsTable from './ApplicationsTable'
 
 const Applicants = () => {
-
     const { id } = useParams();
     const dispatch = useDispatch();
     const { applications } = useSelector(state => state.applicationSlice);

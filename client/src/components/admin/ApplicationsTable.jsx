@@ -10,6 +10,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 const short = ["Accepted", "Rejected"];
 const ApplicationsTable = () => {
     const { applications } = useSelector(state => state?.applicationSlice);
+    const { allAppliedJobs } = useSelector(state => state?.jobSlice);
     const statusHandler = async (status, id) => {
         try {
             const { data } = await axios.put(`${APPLICATION_API_END_POINT}/status/${id}/update`, { status }, {
