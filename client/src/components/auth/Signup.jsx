@@ -24,7 +24,7 @@ const Signup = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { loading } = useSelector(state => state.authSlice);
+    const { loading ,user} = useSelector(state => state.authSlice);
     const changeEventHandler = (e) => {
         const { name, value } = e.target
         setInput({ ...input, [name]: value })
