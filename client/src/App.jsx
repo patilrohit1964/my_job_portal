@@ -13,6 +13,7 @@ import Jobs from './components/Jobs'
 import Profile from './components/Profile'
 import PostJob from './components/admin/PostJob'
 import Applicants from './components/admin/Applicants'
+import ProtectRoute from './components/admin/ProtectRoute'
 
 
 
@@ -49,27 +50,27 @@ const appRoutes = createBrowserRouter([
   // admin routes
   {
     path: "/admin/companies",
-    element: <Companies />
+    element: <ProtectRoute><Companies /></ProtectRoute>
   },
   {
     path: "/admin/companies/create",
-    element: <CompaniesCreate />
+    element: <ProtectRoute><CompaniesCreate /></ProtectRoute>
   },
   {
     path: "/admin/companies/:id",
-    element: <CompanySetup />
+    element: <ProtectRoute><CompanySetup /></ProtectRoute>
   },
   {
     path: "/admin/jobs",
-    element: <AdminJobs />
+    element: <ProtectRoute><AdminJobs /></ProtectRoute>
   },
   {
     path: "/admin/jobs/post",
-    element: <PostJob />
+    element: <ProtectRoute><PostJob /></ProtectRoute>
   },
   {
     path: "/admin/jobs/:id/applicants",
-    element: <Applicants />
+    element: <ProtectRoute><Applicants /></ProtectRoute>
   }
 ])
 const App = () => {

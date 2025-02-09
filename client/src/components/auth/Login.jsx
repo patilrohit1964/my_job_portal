@@ -2,7 +2,7 @@ import { setLoading, setUser } from '@/redux/authSlice'
 import { USER_API_END_POINT } from '@/utils/constants'
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -21,7 +21,7 @@ const Login = () => {
     })
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const { loading } = useSelector(state => state.authSlice);
+    const { loading, user } = useSelector(state => state.authSlice);
 
     const changeEventHandler = (e) => {
         const { name, value } = e.target
@@ -51,7 +51,11 @@ const Login = () => {
             dispatch(setLoading(false));
         }
     }
-
+    useEffect(() => {
+        if (user) {
+            navigate("/");
+        }
+    }, [])
     return (
         <div>
             <Navbar />
