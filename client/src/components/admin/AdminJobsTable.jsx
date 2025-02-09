@@ -9,7 +9,6 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 //ensure get admin jobs correctly that admin added their jobs
 const AdminJobsTable = () => {
     const { allAdminJobs, searchJobByText } = useSelector(store => store?.jobSlice);
-
     const [filterJobs, setFilterJobs] = useState(allAdminJobs);
     const navigate = useNavigate();
     useEffect(() => {
@@ -40,7 +39,7 @@ const AdminJobsTable = () => {
                             {
                                 filterJobs?.map((job) => (
                                     <tr key={job?._id}>
-                                        <TableCell>{job?.company?.name}</TableCell>
+                                        <TableCell>{job?.title}</TableCell>
                                         <TableCell>{job?.position}</TableCell>
                                         <TableCell>{job?.createdAt.split("T")[0]}</TableCell>
                                         <TableCell className="text-right cursor-pointer">
