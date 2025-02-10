@@ -61,7 +61,7 @@ const FilterCard = () => {
                 {
                     filterData.map((data, index) => (
                         <div key={index}>
-                            <h2 className='font-semibold text-lg text-gray-700 mb-3'>{data.filterType}</h2>
+                            <h2 className='font-semibold text-lg text-gray-700 mb-3'>{data?.filterType}</h2>
                             {
                                 data.array.map((item, idx) => {
                                     const radioId = `r-${index}-${idx}`
