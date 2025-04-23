@@ -13,7 +13,7 @@ main/
 </pre>
 
 <h2>🚀 Live Demo</h2>
-<p><a href="https://my-job-portal-pdi1.onrender.com/">🌐 Visit Live Site</a> (Replace with your deployed link)</p>
+<p><a href="https://my-job-portal-pdi1.onrender.com/" target="_blank">🌐 Visit Live Site</a></p>
 
 <h2>🛠️ Tech Stack</h2>
 <ul>
