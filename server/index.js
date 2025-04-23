@@ -4,6 +4,7 @@ const cors = require("cors");
 const connectDb = require("./utils/db");
 const userRouter = require("./routes/user.router");
 const compnayRouter = require("./routes/company.router");
+const path = require("path");
 const jobRouter = require("./routes/job.router");
 const applicationRouter = require("./routes/application.router");
 require("dotenv").config({});
@@ -29,7 +30,10 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/company", compnayRouter);
 app.use("/api/v1/job", jobRouter);
 app.use("/api/v1/application", applicationRouter);
-
+app.use(express.static(path.join(__dirname, "../client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
 app.listen(PORT, () => {
   connectDb();
   console.log("server running on: ", PORT);
